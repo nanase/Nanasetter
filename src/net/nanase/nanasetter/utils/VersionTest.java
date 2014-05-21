@@ -24,7 +24,7 @@ public class VersionTest {
         final Version ver2 = new Version(1, 2, 42);
         final Version ver3 = new Version(1, 2);
         final Version ver4 = new Version(1);
-        final Version ver5 = Version.Parse("1.2a2");
+        final Version ver5 = Version.parse("1.2a2");
 
         assertEquals(ver0.toString(), "1.2.42.1982-rc2");
         assertEquals(ver1.toString(), "1.2.42.1982");
@@ -61,22 +61,22 @@ public class VersionTest {
     @Test
     public void testParse() throws Exception {
         // legal pattern
-        final Version ver0 = Version.Parse("1.2.42.1982-rc2");
+        final Version ver0 = Version.parse("1.2.42.1982-rc2");
         final Version expect0 = new Version(1, 2, 42, 1982, "-rc2");
 
-        final Version ver1 = Version.Parse("1.2.42.1982");
+        final Version ver1 = Version.parse("1.2.42.1982");
         final Version expect1 = new Version(1, 2, 42, 1982);
 
-        final Version ver2 = Version.Parse("1.2.42");
+        final Version ver2 = Version.parse("1.2.42");
         final Version expect2 = new Version(1, 2, 42);
 
-        final Version ver3 = Version.Parse("1.2");
+        final Version ver3 = Version.parse("1.2");
         final Version expect3 = new Version(1, 2);
 
-        final Version ver4 = Version.Parse("1");
+        final Version ver4 = Version.parse("1");
         final Version expect4 = new Version(1);
 
-        final Version ver5 = Version.Parse("1.2a2");
+        final Version ver5 = Version.parse("1.2a2");
         final Version expect5 = new Version(1, 2, -1, -1, "a2");
 
         assertEquals(ver0, expect0);
@@ -100,7 +100,7 @@ public class VersionTest {
 
         for (String illegal : illegals) {
             try {
-                Version.Parse(illegal);
+                Version.parse(illegal);
                 fail("No exception thrown: \"" + illegal + "\"");
             } catch (IllegalArgumentException e) {
                 // legal behavior

@@ -108,7 +108,7 @@ public class Version implements Comparable<Version> {
         return 0;
     }
 
-    public static Version Parse(String text) {
+    public static Version parse(String text) {
         if (text == null)
             throw new IllegalArgumentException("null");
 
