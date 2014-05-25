@@ -36,10 +36,14 @@
         <sourceDirectory>${basedir}/src/main</sourceDirectory>
         <testSourceDirectory>${basedir}/src/test</testSourceDirectory>
         <resources>
-            <resource>${project.basedir}/src/main/resources</resource>
+            <resource>
+              <directory>${project.basedir}/src/main/resources</directory>
+            </resource>
         </resources>
         <testResources>
-            <resource>${project.basedir}/src/test/resources</resource>
+            <testResource>
+              <directory>${project.basedir}/src/test/resources</directory>
+            </testResource>
         </testResources>
     </build>
 
