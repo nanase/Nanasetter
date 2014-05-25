@@ -35,6 +35,12 @@
     <build>
         <sourceDirectory>${basedir}/src/main</sourceDirectory>
         <testSourceDirectory>${basedir}/src/test</testSourceDirectory>
+        <resources>
+            <resource>${project.basedir}/src/main/resources</resource>
+        </resources>
+        <testResources>
+            <resource>${project.basedir}/src/test/resources</resource>
+        </testResources>
     </build>
 
     <dependencies>
