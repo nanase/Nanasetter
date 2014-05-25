@@ -13,7 +13,7 @@ hs_err_pid*
 
 # IntelliJ Files and Direcotries
 .idea/workspace.xml
-
+.idea/libraries
 system/
 config/
 test-system/
