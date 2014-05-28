@@ -30,7 +30,7 @@
 
     <groupId>net.nanase.nanasetter</groupId>
     <artifactId>Nanasetter</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1-dev</version>
 
     <build>
         <sourceDirectory>${basedir}/src/main</sourceDirectory>
