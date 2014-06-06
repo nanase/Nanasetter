@@ -37,12 +37,12 @@
         <testSourceDirectory>${basedir}/src/test</testSourceDirectory>
         <resources>
             <resource>
-              <directory>${project.basedir}/src/main/resources</directory>
+              <directory>${project.basedir}/resource/main</directory>
             </resource>
         </resources>
         <testResources>
             <testResource>
-              <directory>${project.basedir}/src/test/resources</directory>
+              <directory>${project.basedir}/resource/test</directory>
             </testResource>
         </testResources>
     </build>
