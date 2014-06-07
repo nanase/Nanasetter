@@ -29,7 +29,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>net.nanase.nanasetter</groupId>
-    <artifactId>Nanasetter</artifactId>
+    <artifactId>nanasetter</artifactId>
     <version>0.1-dev</version>
 
     <build>
