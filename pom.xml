@@ -37,14 +37,35 @@
         <testSourceDirectory>${basedir}/src/test</testSourceDirectory>
         <resources>
             <resource>
-              <directory>${project.basedir}/resource/main</directory>
+                <directory>${project.basedir}/resource/main</directory>
             </resource>
         </resources>
         <testResources>
             <testResource>
-              <directory>${project.basedir}/resource/test</directory>
+                <directory>${project.basedir}/resource/test</directory>
             </testResource>
         </testResources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>net.nanase.nanasetter.Main</mainClass>
+                        </manifest>
+                        <!--<manifestEntries>
+                            <Class-Path>./</Class-Path>
+                        </manifestEntries>-->
+                    </archive>
+                    <outputDirectory>
+                        ${project.build.directory}/jar-output
+                    </outputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
     </build>
 
     <dependencies>
