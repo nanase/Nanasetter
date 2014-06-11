@@ -29,6 +29,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import net.nanase.nanasetter.window.main.MainController;
 
 import java.io.IOException;
 
@@ -45,8 +46,11 @@ public class Main extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/window/main.fxml"));
         Parent root = loader.load();
-
         stage.setScene(new Scene(root));
+
+        MainController controller = loader.getController();
+        controller.setup();
+
         stage.show();
     }
 }
