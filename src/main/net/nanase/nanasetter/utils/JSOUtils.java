@@ -45,6 +45,16 @@ public class JSOUtils {
             consumer.accept(this.jsObject.getMember(name));
     }
 
+    public void ifExistsAsBoolean(String name, Consumer<Boolean> consumer) {
+        if (!this.hasMember(name))
+            return;
+
+        Object obj = this.jsObject.getMember(name);
+
+        if (obj instanceof Boolean)
+            consumer.accept((Boolean) obj);
+    }
+
     public void ifExistsAsString(String name, Consumer<String> consumer) {
         if (!this.hasMember(name))
             return;
