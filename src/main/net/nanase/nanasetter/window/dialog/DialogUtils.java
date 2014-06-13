@@ -27,6 +27,8 @@ package net.nanase.nanasetter.window.dialog;
 import impl.org.controlsfx.i18n.Localization;
 import impl.org.controlsfx.i18n.Translations;
 import javafx.stage.Window;
+import net.nanase.nanasetter.utils.JSOUtils;
+import netscape.javascript.JSObject;
 import org.controlsfx.dialog.Dialogs;
 
 /**
@@ -45,11 +47,54 @@ public class DialogUtils {
         Translations.getTranslation("en").ifPresent(t -> Localization.setLocale(t.getLocale()));
     }
 
-    public void showMessage(String message) {
+    public void showMessage(Object object) {
+        if (object == null)
+            return;
+
+        if (object instanceof String)
+            this.showMessage((String) object);
+        else if (object instanceof JSObject)
+            this.showMessage((JSObject) object);
+        else
+            this.showMessage(object.toString());
+    }
+
+    private void showMessage(String message) {
+        if (message == null)
+            return;
+
         Dialogs.create()
                 .owner(this.window)
                 .title("")
                 .message(message)
-                .showConfirm();
+                .showInformation();
+    }
+
+    private void showMessage(JSObject parameters) {
+        if (parameters == null)
+            return;
+
+        JSOUtils jsObject = new JSOUtils(parameters);
+        Dialogs dialogs = Dialogs.create().owner(this.window).title("");
+
+        jsObject.ifExistsAsString("message", dialogs::message);
+        jsObject.ifExistsAsString("masthead", dialogs::masthead);
+        jsObject.ifExistsAsString("title", dialogs::title);
+        String type = jsObject.getString("type").orElse("info");
+
+        switch (type) {
+            case "warning":
+            case "warn":
+                dialogs.showWarning();
+                break;
+
+            case "error":
+                dialogs.showError();
+                break;
+
+            default:
+                dialogs.showInformation();
+                break;
+        }
     }
 }
