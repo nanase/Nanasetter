@@ -26,6 +26,7 @@ package net.nanase.nanasetter.utils;
 
 import netscape.javascript.JSObject;
 
+import java.util.Optional;
 import java.util.function.Consumer;
 
 /**
@@ -73,6 +74,42 @@ public class JSOUtils {
 
         if (obj instanceof Number)
             consumer.accept((Number) obj);
+    }
+
+    public Optional<Boolean> getBoolean(String name) {
+        if (!this.hasMember(name))
+            return Optional.empty();
+
+        Object obj = this.jsObject.getMember(name);
+
+        if (obj instanceof Boolean)
+            return Optional.of((Boolean)obj);
+        else
+            return Optional.empty();
+    }
+
+    public Optional<String> getString(String name) {
+        if (!this.hasMember(name))
+            return Optional.empty();
+
+        Object obj = this.jsObject.getMember(name);
+
+        if (obj instanceof String)
+            return Optional.of((String)obj);
+        else
+            return Optional.empty();
+    }
+
+    public Optional<Number> getNumber(String name) {
+        if (!this.hasMember(name))
+            return Optional.empty();
+
+        Object obj = this.jsObject.getMember(name);
+
+        if (obj instanceof Number)
+            return Optional.of((Number)obj);
+        else
+            return Optional.empty();
     }
 
     public boolean hasMember(String name) {
