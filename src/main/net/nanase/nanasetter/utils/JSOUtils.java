@@ -38,15 +38,30 @@ public class JSOUtils {
     private final JSObject jsObject;
 
     public JSOUtils(JSObject jsObject) {
+        if (jsObject == null)
+            throw new IllegalArgumentException();
+
         this.jsObject = jsObject;
     }
 
     public void ifExists(String name, Consumer<Object> consumer) {
+        if (name == null)
+            throw new IllegalArgumentException();
+
+        if (consumer == null)
+            throw new IllegalArgumentException();
+
         if (this.hasMember(name))
             consumer.accept(this.jsObject.getMember(name));
     }
 
     public void ifExistsAsBoolean(String name, Consumer<Boolean> consumer) {
+        if (name == null)
+            throw new IllegalArgumentException();
+
+        if (consumer == null)
+            throw new IllegalArgumentException();
+
         if (!this.hasMember(name))
             return;
 
@@ -57,6 +72,12 @@ public class JSOUtils {
     }
 
     public void ifExistsAsString(String name, Consumer<String> consumer) {
+        if (name == null)
+            throw new IllegalArgumentException();
+
+        if (consumer == null)
+            throw new IllegalArgumentException();
+
         if (!this.hasMember(name))
             return;
 
@@ -67,6 +88,12 @@ public class JSOUtils {
     }
 
     public void ifExistsAsNumber(String name, Consumer<Number> consumer) {
+        if (name == null)
+            throw new IllegalArgumentException();
+
+        if (consumer == null)
+            throw new IllegalArgumentException();
+
         if (!this.hasMember(name))
             return;
 
@@ -77,6 +104,9 @@ public class JSOUtils {
     }
 
     public Optional<Boolean> getBoolean(String name) {
+        if (name == null)
+            throw new IllegalArgumentException();
+
         if (!this.hasMember(name))
             return Optional.empty();
 
@@ -89,6 +119,9 @@ public class JSOUtils {
     }
 
     public Optional<String> getString(String name) {
+        if (name == null)
+            throw new IllegalArgumentException();
+
         if (!this.hasMember(name))
             return Optional.empty();
 
@@ -101,6 +134,9 @@ public class JSOUtils {
     }
 
     public Optional<Number> getNumber(String name) {
+        if (name == null)
+            throw new IllegalArgumentException();
+
         if (!this.hasMember(name))
             return Optional.empty();
 
@@ -113,11 +149,17 @@ public class JSOUtils {
     }
 
     public boolean hasMember(String name) {
+        if (name == null)
+            throw new IllegalArgumentException();
+
         return !this.getTypeString(name).equals("undefined");
         //return (boolean) this.jsObject.eval("typeof this." + name + " !== 'undefined'");
     }
 
     public String getTypeString(String name) {
+        if (name == null)
+            throw new IllegalArgumentException();
+
         return (String) this.jsObject.eval("typeof this." + name);
     }
 }
