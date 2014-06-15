@@ -34,9 +34,20 @@ import java.util.function.Consumer;
  * Created by nanase on 14/06/12.
  */
 
+/**
+ * JSObject の機能を拡張します。
+ *
+ * @author Tomona Nanase
+ * @since Nanasetter 0.1
+ */
 public class JSOUtils {
     private final JSObject jsObject;
 
+    /**
+     * JSObject を指定してインスタンスを初期化します。
+     *
+     * @param jsObject JSOUtils オブジェクトで使用される JSObject オブジェクト。
+     */
     public JSOUtils(JSObject jsObject) {
         if (jsObject == null)
             throw new IllegalArgumentException();
@@ -44,6 +55,12 @@ public class JSOUtils {
         this.jsObject = jsObject;
     }
 
+    /**
+     * 指定されたプロパティが存在するときに、指定された Consumer 関数を実行します。
+     *
+     * @param name プロパティ名。
+     * @param consumer 実行される Consumer 関数。
+     */
     public void ifExists(String name, Consumer<Object> consumer) {
         if (name == null)
             throw new IllegalArgumentException();
@@ -55,6 +72,12 @@ public class JSOUtils {
             consumer.accept(this.jsObject.getMember(name));
     }
 
+    /**
+     * 指定されたプロパティが存在するときに、指定された Consumer 関数を実行します。
+     *
+     * @param name プロパティ名。
+     * @param consumer 実行される Consumer 関数。
+     */
     public void ifExistsAsBoolean(String name, Consumer<Boolean> consumer) {
         if (name == null)
             throw new IllegalArgumentException();
@@ -71,6 +94,12 @@ public class JSOUtils {
             consumer.accept((Boolean) obj);
     }
 
+    /**
+     * 指定されたプロパティが存在するときに、指定された Consumer 関数を実行します。
+     *
+     * @param name プロパティ名。
+     * @param consumer 実行される Consumer 関数。
+     */
     public void ifExistsAsString(String name, Consumer<String> consumer) {
         if (name == null)
             throw new IllegalArgumentException();
@@ -87,6 +116,12 @@ public class JSOUtils {
             consumer.accept((String) obj);
     }
 
+    /**
+     * 指定されたプロパティが存在するときに、指定された Consumer 関数を実行します。
+     *
+     * @param name プロパティ名。
+     * @param consumer 実行される Consumer 関数。
+     */
     public void ifExistsAsNumber(String name, Consumer<Number> consumer) {
         if (name == null)
             throw new IllegalArgumentException();
@@ -103,6 +138,13 @@ public class JSOUtils {
             consumer.accept((Number) obj);
     }
 
+    /**
+     * 指定されたプロパティが存在するならばそのプロパティを返します。
+     * プロパティが存在しない、型が一致しない場合は Optional.empty() と同値を返します。
+     *
+     * @param name プロパティ名。
+     * @return プロパティの値を内包した Optional&lt;Boolean&gt; オブジェクト。
+     */
     public Optional<Boolean> getBoolean(String name) {
         if (name == null)
             throw new IllegalArgumentException();
@@ -118,6 +160,13 @@ public class JSOUtils {
             return Optional.empty();
     }
 
+    /**
+     * 指定されたプロパティが存在するならばそのプロパティを返します。
+     * プロパティが存在しない、型が一致しない場合は Optional.empty() と同値を返します。
+     *
+     * @param name プロパティ名。
+     * @return プロパティの値を内包した Optional&lt;String&gt; オブジェクト。
+     */
     public Optional<String> getString(String name) {
         if (name == null)
             throw new IllegalArgumentException();
@@ -133,6 +182,13 @@ public class JSOUtils {
             return Optional.empty();
     }
 
+    /**
+     * 指定されたプロパティが存在するならばそのプロパティを返します。
+     * プロパティが存在しない、型が一致しない場合は Optional.empty() と同値を返します。
+     *
+     * @param name プロパティ名。
+     * @return プロパティの値を内包した Optional&lt;Number&gt; オブジェクト。
+     */
     public Optional<Number> getNumber(String name) {
         if (name == null)
             throw new IllegalArgumentException();
@@ -148,6 +204,12 @@ public class JSOUtils {
             return Optional.empty();
     }
 
+    /**
+     * 指定したプロパティ名を持つプロパティが存在するかどうかの真偽値を返します。
+     *
+     * @param name プロパティ名。
+     * @return プロパティが存在するとき true、存在しないとき false。
+     */
     public boolean hasMember(String name) {
         if (name == null)
             throw new IllegalArgumentException();
@@ -156,6 +218,12 @@ public class JSOUtils {
         //return (boolean) this.jsObject.eval("typeof this." + name + " !== 'undefined'");
     }
 
+    /**
+     * 指定したプロパティのJavaScriptでの型を取得します。
+     *
+     * @param name プロパティ名。
+     * @return JavaScriptでの型名。
+     */
     public String getTypeString(String name) {
         if (name == null)
             throw new IllegalArgumentException();
