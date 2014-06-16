@@ -29,6 +29,7 @@ import impl.org.controlsfx.i18n.Translations;
 import javafx.stage.Window;
 import net.nanase.nanasetter.utils.JSOUtils;
 import netscape.javascript.JSObject;
+import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
 
 /**
@@ -96,5 +97,41 @@ public class DialogUtils {
                 dialogs.showInformation();
                 break;
         }
+    }
+
+    public String confirm(Object object) {
+        if (object == null)
+            return null;
+
+        if (object instanceof String)
+            return this.confirm((String) object);
+        else if (object instanceof JSObject)
+            return this.confirm((JSObject) object);
+        else
+            return this.confirm(object.toString());
+    }
+
+    private String confirm(String message) {
+        return Dialogs.create()
+                .owner(this.window)
+                .title("")
+                .message(message)
+                .showConfirm()
+                .toString()
+                .toLowerCase();
+    }
+
+    private String confirm(JSObject parameters) {
+        if (parameters == null)
+            return null;
+
+        JSOUtils jsObject = new JSOUtils(parameters);
+        Dialogs dialogs = Dialogs.create().owner(this.window).title("");
+
+        jsObject.ifExistsAsString("message", dialogs::message);
+        jsObject.ifExistsAsString("masthead", dialogs::masthead);
+        jsObject.ifExistsAsString("title", dialogs::title);
+
+        return dialogs.showConfirm().toString().toLowerCase();
     }
 }
