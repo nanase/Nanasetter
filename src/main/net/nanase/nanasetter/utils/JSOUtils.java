@@ -58,7 +58,7 @@ public class JSOUtils {
     /**
      * 指定されたプロパティが存在するときに、指定された Consumer 関数を実行します。
      *
-     * @param name プロパティ名。
+     * @param name     プロパティ名。
      * @param consumer 実行される Consumer 関数。
      */
     public void ifExists(String name, Consumer<Object> consumer) {
@@ -75,7 +75,7 @@ public class JSOUtils {
     /**
      * 指定されたプロパティが存在するときに、指定された Consumer 関数を実行します。
      *
-     * @param name プロパティ名。
+     * @param name     プロパティ名。
      * @param consumer 実行される Consumer 関数。
      */
     public void ifExistsAsBoolean(String name, Consumer<Boolean> consumer) {
@@ -97,7 +97,7 @@ public class JSOUtils {
     /**
      * 指定されたプロパティが存在するときに、指定された Consumer 関数を実行します。
      *
-     * @param name プロパティ名。
+     * @param name     プロパティ名。
      * @param consumer 実行される Consumer 関数。
      */
     public void ifExistsAsString(String name, Consumer<String> consumer) {
@@ -119,7 +119,7 @@ public class JSOUtils {
     /**
      * 指定されたプロパティが存在するときに、指定された Consumer 関数を実行します。
      *
-     * @param name プロパティ名。
+     * @param name     プロパティ名。
      * @param consumer 実行される Consumer 関数。
      */
     public void ifExistsAsNumber(String name, Consumer<Number> consumer) {
@@ -155,7 +155,7 @@ public class JSOUtils {
         Object obj = this.jsObject.getMember(name);
 
         if (obj instanceof Boolean)
-            return Optional.of((Boolean)obj);
+            return Optional.of((Boolean) obj);
         else
             return Optional.empty();
     }
@@ -177,7 +177,7 @@ public class JSOUtils {
         Object obj = this.jsObject.getMember(name);
 
         if (obj instanceof String)
-            return Optional.of((String)obj);
+            return Optional.of((String) obj);
         else
             return Optional.empty();
     }
@@ -199,7 +199,7 @@ public class JSOUtils {
         Object obj = this.jsObject.getMember(name);
 
         if (obj instanceof Number)
-            return Optional.of((Number)obj);
+            return Optional.of((Number) obj);
         else
             return Optional.empty();
     }
