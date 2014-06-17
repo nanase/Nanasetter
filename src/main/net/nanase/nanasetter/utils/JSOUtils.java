@@ -214,8 +214,12 @@ public class JSOUtils {
         if (name == null)
             throw new IllegalArgumentException();
 
-        return !this.getTypeString(name).equals("undefined");
-        //return (boolean) this.jsObject.eval("typeof this." + name + " !== 'undefined'");
+        try {
+            return !this.getTypeString(name).equals("undefined");
+            //return (boolean) this.jsObject.eval("typeof this." + name + " !== 'undefined'");
+        } catch (netscape.javascript.JSException e) {
+            return false;
+        }
     }
 
     /**
