@@ -215,8 +215,8 @@ public class JSOUtils {
             throw new IllegalArgumentException();
 
         try {
-            return !this.getTypeString(name).equals("undefined");
-            //return (boolean) this.jsObject.eval("typeof this." + name + " !== 'undefined'");
+            //return !this.getTypeString(name).equals("undefined");
+            return (boolean) this.jsObject.eval("typeof this." + name + " !== 'undefined'");
         } catch (netscape.javascript.JSException e) {
             return false;
         }
