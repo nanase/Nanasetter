@@ -234,4 +234,9 @@ public class JSOUtils {
 
         return (String) this.jsObject.eval("typeof this." + name);
     }
+
+    public String[] getMembersList() {
+        return ((String)this.jsObject.eval("Object.keys(this).toString()")).split(",");
+        //return ((String)this.jsObject.eval("Object.keys(this).join(',')")).split(",");
+    }
 }
