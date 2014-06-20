@@ -143,7 +143,7 @@ public class JSOUtils {
      * プロパティが存在しない、型が一致しない場合は Optional.empty() と同値を返します。
      *
      * @param name プロパティ名。
-     * @return プロパティの値を内包した Optional&lt;Boolean&gt; オブジェクト。
+     * @return プロパティの値を内包した {@code Optional<Boolean>} オブジェクト。
      */
     public Optional<Boolean> getBoolean(String name) {
         if (name == null)
@@ -165,7 +165,7 @@ public class JSOUtils {
      * プロパティが存在しない、型が一致しない場合は Optional.empty() と同値を返します。
      *
      * @param name プロパティ名。
-     * @return プロパティの値を内包した Optional&lt;String&gt; オブジェクト。
+     * @return プロパティの値を内包した {@code Optional<String>} オブジェクト。
      */
     public Optional<String> getString(String name) {
         if (name == null)
@@ -187,7 +187,7 @@ public class JSOUtils {
      * プロパティが存在しない、型が一致しない場合は Optional.empty() と同値を返します。
      *
      * @param name プロパティ名。
-     * @return プロパティの値を内包した Optional&lt;Number&gt; オブジェクト。
+     * @return プロパティの値を内包した {@code Optional<Number>} オブジェクト。
      */
     public Optional<Number> getNumber(String name) {
         if (name == null)
