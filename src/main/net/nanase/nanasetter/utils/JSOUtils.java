@@ -55,6 +55,10 @@ public class JSOUtils {
         this.jsObject = jsObject;
     }
 
+    public JSObject getJSObject() {
+        return this.jsObject;
+    }
+
     /**
      * 指定されたプロパティが存在するときに、指定された Consumer 関数を実行します。
      *
