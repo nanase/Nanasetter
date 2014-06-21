@@ -29,7 +29,6 @@ import impl.org.controlsfx.i18n.Translations;
 import javafx.stage.Window;
 import net.nanase.nanasetter.utils.JSOUtils;
 import netscape.javascript.JSObject;
-import org.controlsfx.control.action.Action;
 import org.controlsfx.dialog.Dialogs;
 
 /**
@@ -81,6 +80,10 @@ public class DialogUtils {
         jsObject.ifExistsAsString("message", dialogs::message);
         jsObject.ifExistsAsString("masthead", dialogs::masthead);
         jsObject.ifExistsAsString("title", dialogs::title);
+
+        if (jsObject.hasMember("button"))
+            ClosingAction.parseFromJS(jsObject).ifPresent(dialogs::actions);
+
         String type = jsObject.getString("type").orElse("info");
 
         switch (type) {
@@ -131,6 +134,9 @@ public class DialogUtils {
         jsObject.ifExistsAsString("message", dialogs::message);
         jsObject.ifExistsAsString("masthead", dialogs::masthead);
         jsObject.ifExistsAsString("title", dialogs::title);
+
+        if (jsObject.hasMember("button"))
+            ClosingAction.parseFromJS(jsObject).ifPresent(dialogs::actions);
 
         return dialogs.showConfirm().toString().toLowerCase();
     }
