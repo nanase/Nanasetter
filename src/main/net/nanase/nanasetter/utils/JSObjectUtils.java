@@ -32,6 +32,9 @@ package net.nanase.nanasetter.utils;
 import netscape.javascript.JSException;
 import netscape.javascript.JSObject;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 
@@ -142,5 +145,48 @@ public class JSObjectUtils {
             return Optional.of(tClass.cast(obj));
 
         return Optional.empty();
+    }
+
+    public static <T> Optional<Collection<T>> getArray(JSObject object, Class<T> tClass) {
+        if (object == null)
+            return Optional.empty();
+
+        if (tClass == null)
+            return Optional.empty();
+
+        if (!isArray(object))
+            return Optional.empty();
+
+        int length = getMember(object, "length", Integer.class).get();
+        List<T> list = new ArrayList<>(length);
+
+        for (int i = 0; i < length; i++) {
+            Object obj = object.getSlot(i);
+
+            if (tClass.isInstance(obj))
+                list.add(tClass.cast(obj));
+            else
+                return Optional.empty();
+        }
+
+        return Optional.of(list);
+    }
+
+    public static <T> Optional<Collection<T>> getArray(JSObject object, String name, Class<T> tClass) {
+        if (object == null)
+            return Optional.empty();
+
+        if (tClass == null)
+            return Optional.empty();
+
+        if (!isArray(object, name))
+            return Optional.empty();
+
+        Optional<JSObject> array = JSObjectUtils.getMember(object, "array", JSObject.class);
+
+        if (!array.isPresent())
+            return Optional.empty();
+
+        return getArray(array.get(), tClass);
     }
 }
