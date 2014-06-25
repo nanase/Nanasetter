@@ -33,7 +33,6 @@ import netscape.javascript.JSException;
 import netscape.javascript.JSObject;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
@@ -214,9 +213,9 @@ public class JSObjectUtils {
      * @param object 対象となる JSObject。
      * @param tClass 配列の {@code Class<T>} クラス。
      * @param <T> 配列の型。
-     * @return 配列を内包した {@code Optional<Collection<T>>}。
+     * @return 配列を内包した {@code Optional<List<T>>}。
      */
-    public static <T> Optional<Collection<T>> getArray(JSObject object, Class<T> tClass) {
+    public static <T> Optional<List<T>> getArray(JSObject object, Class<T> tClass) {
         if (object == null)
             return Optional.empty();
 
@@ -248,9 +247,9 @@ public class JSObjectUtils {
      * @param name 対象のメンバ名。
      * @param tClass 配列の {@code Class<T>} クラス。
      * @param <T> 配列の型。
-     * @return 配列を内包した {@code Optional<Collection<T>>}。
+     * @return 配列を内包した {@code Optional<List<T>>}。
      */
-    public static <T> Optional<Collection<T>> getArray(JSObject object, String name, Class<T> tClass) {
+    public static <T> Optional<List<T>> getArray(JSObject object, String name, Class<T> tClass) {
         if (object == null)
             return Optional.empty();
 
