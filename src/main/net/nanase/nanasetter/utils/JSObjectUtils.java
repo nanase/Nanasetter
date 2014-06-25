@@ -100,7 +100,7 @@ public class JSObjectUtils {
         ifExists(object, name, tClass, consumer, null);
     }
 
-    public static <T> void ifExists(JSObject object, String name, Class<T> tClass, Consumer<T> consumer, Runnable runnable) {
+    public static <T> void ifExists(JSObject object, String name, Class<T> tClass, Consumer<T> consumer, Runnable elseRun) {
         if (object == null)
             return;
 
@@ -111,8 +111,8 @@ public class JSObjectUtils {
 
         if (member.isPresent() && consumer != null)
             consumer.accept(member.get());
-        else if (runnable != null)
-            runnable.run();
+        else if (elseRun != null)
+            elseRun.run();
     }
 
     public static boolean isArray(JSObject object) {
