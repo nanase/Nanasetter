@@ -83,6 +83,7 @@ public class JSObjectUtils {
             if (hasMember(object, name))
                 return (String) object.eval("typeof this." + name);
         } catch (JSException e) {
+            //
         }
 
         return "undefined";
@@ -101,6 +102,7 @@ public class JSObjectUtils {
         try {
             return Optional.of(((String) object.eval("Object.keys(this).toString()")).split(","));
         } catch (JSException e) {
+            //
         }
 
         return Optional.empty();
@@ -160,10 +162,7 @@ public class JSObjectUtils {
      * @return 配列であるとき true、それ以外のとき false。
      */
     public static boolean isArray(JSObject object) {
-        if (object == null)
-            return false;
-
-        return hasMember(object, "length");
+        return object != null && hasMember(object, "length");
     }
 
     /**
@@ -174,13 +173,7 @@ public class JSObjectUtils {
      * @return 配列であるとき true、それ以外のとき false。
      */
     public static boolean isArray(JSObject object, String name) {
-        if (object == null)
-            return false;
-
-        if (name == null)
-            return false;
-
-        return hasMember(object, name + ".length");
+        return object != null && name != null && hasMember(object, name + ".length");
     }
 
     /**
