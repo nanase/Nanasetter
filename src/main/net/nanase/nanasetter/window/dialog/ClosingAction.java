@@ -26,16 +26,17 @@ package net.nanase.nanasetter.window.dialog;
 
 import impl.org.controlsfx.i18n.Localization;
 import javafx.event.ActionEvent;
-import net.nanase.nanasetter.utils.JSOUtils;
 import netscape.javascript.JSObject;
 import org.controlsfx.control.ButtonBar;
 import org.controlsfx.control.action.AbstractAction;
 import org.controlsfx.dialog.Dialog;
 
-import java.util.Collection;
-import java.util.Optional;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static net.nanase.nanasetter.utils.JSObjectUtils.*;
 
 /**
  * Project: Nanasetter
@@ -60,34 +61,32 @@ class ClosingAction extends AbstractAction {
         ((Dialog) event.getSource()).hide();
     }
 
-    public static Optional<Collection<ClosingAction>> parseFromJS(JSOUtils jsoUtils) {
-        Object obj = jsoUtils.getJSObject().getMember("button");
+    public static List<ClosingAction> parseFromJS(JSObject jsObject) {
+        Object obj = getMember(jsObject, "button", Object.class).orElse(null);
+
+        List<ClosingAction> res = new ArrayList<>();
 
         if (obj instanceof JSObject) {
-            JSObject jsObject = (JSObject) obj;
-            JSOUtils utils = new JSOUtils(jsObject);
+            JSObject buttonObject = (JSObject) obj;
 
-            if (utils.hasMember("length")) {
-                int length = utils.getNumber("length").orElse(0).intValue();
-                Stream<String> strs = Stream.empty();
-
-                for (int i = 0; i < length; i++)
-                    strs = Stream.concat(strs, Stream.of((jsObject).getSlot(i).toString()));
-
-                return Optional.of(strs.map(k -> new ClosingAction(getButtonDefaultText(k), k))
-                        .collect(Collectors.toList()));
-            } else {
-                return Optional.of(Stream.of(utils.getMembersList())
-                        .map(s -> new ClosingAction(utils.getString(s).orElse(getButtonDefaultText(s)), s))
-                        .collect(Collectors.toList()));
-            }
+            if (isArray(buttonObject))
+                getArray(buttonObject, String.class)
+                        .ifPresent(s -> res.addAll(s.stream()
+                                .map(k -> new ClosingAction(getButtonDefaultText(k), k))
+                                .collect(Collectors.toList())));
+            else
+                getMembersList(buttonObject)
+                        .ifPresent(m -> res.addAll(Stream.of(m)
+                                .map(s -> new ClosingAction(getMember(buttonObject, s, String.class)
+                                        .orElse(getButtonDefaultText(s)), s))
+                                .collect(Collectors.toList())));
         } else if (obj instanceof String) {
-            return Optional.of(Stream.of(((String) obj).split(""))
+            res.addAll(Stream.of(((String) obj).split(""))
                     .map(k -> new ClosingAction(getButtonDefaultText(k), k))
                     .collect(Collectors.toList()));
         }
 
-        return Optional.empty();
+        return res;
     }
 
     private static ButtonBar.ButtonType convertButtonType(String name) {
