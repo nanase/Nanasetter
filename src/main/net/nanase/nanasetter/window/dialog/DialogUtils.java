@@ -27,7 +27,7 @@ package net.nanase.nanasetter.window.dialog;
 import impl.org.controlsfx.i18n.Localization;
 import impl.org.controlsfx.i18n.Translations;
 import javafx.stage.Window;
-import net.nanase.nanasetter.utils.JSOUtils;
+import net.nanase.nanasetter.utils.JSObjectUtils;
 import netscape.javascript.JSObject;
 import org.controlsfx.dialog.Dialogs;
 
@@ -74,17 +74,16 @@ public class DialogUtils {
         if (parameters == null)
             return;
 
-        JSOUtils jsObject = new JSOUtils(parameters);
         Dialogs dialogs = Dialogs.create().owner(this.window).title("");
 
-        jsObject.ifExistsAsString("message", dialogs::message);
-        jsObject.ifExistsAsString("masthead", dialogs::masthead);
-        jsObject.ifExistsAsString("title", dialogs::title);
+        JSObjectUtils.ifExists(parameters, "message", String.class, dialogs::message);
+        JSObjectUtils.ifExists(parameters, "masthead", String.class, dialogs::masthead);
+        JSObjectUtils.ifExists(parameters, "title", String.class, dialogs::title);
 
-        if (jsObject.hasMember("button"))
-            ClosingAction.parseFromJS(jsObject).ifPresent(dialogs::actions);
+        if (JSObjectUtils.hasMember(parameters, "button"))
+            dialogs.actions(ClosingAction.parseFromJS(parameters));
 
-        String type = jsObject.getString("type").orElse("info");
+        String type = JSObjectUtils.getMember(parameters, "type", String.class).orElse("info");
 
         switch (type) {
             case "warning":
@@ -128,15 +127,14 @@ public class DialogUtils {
         if (parameters == null)
             return null;
 
-        JSOUtils jsObject = new JSOUtils(parameters);
         Dialogs dialogs = Dialogs.create().owner(this.window).title("");
 
-        jsObject.ifExistsAsString("message", dialogs::message);
-        jsObject.ifExistsAsString("masthead", dialogs::masthead);
-        jsObject.ifExistsAsString("title", dialogs::title);
+        JSObjectUtils.ifExists(parameters, "message", String.class, dialogs::message);
+        JSObjectUtils.ifExists(parameters, "masthead", String.class, dialogs::masthead);
+        JSObjectUtils.ifExists(parameters, "title", String.class, dialogs::title);
 
-        if (jsObject.hasMember("button"))
-            ClosingAction.parseFromJS(jsObject).ifPresent(dialogs::actions);
+        if (JSObjectUtils.hasMember(parameters, "button"))
+            dialogs.actions(ClosingAction.parseFromJS(parameters));
 
         return dialogs.showConfirm().toString().toLowerCase();
     }
