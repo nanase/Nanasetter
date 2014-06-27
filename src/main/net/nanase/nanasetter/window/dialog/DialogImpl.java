@@ -34,7 +34,7 @@ import org.controlsfx.dialog.Dialogs;
  * Created by nanase on 14/06/27.
  */
 
-class DialogUtilsImpl {
+class DialogImpl {
     public static void showMessage(Window window, String message) {
         if (message == null)
             return;
