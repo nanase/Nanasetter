@@ -34,11 +34,11 @@ import netscape.javascript.JSObject;
  * Created by nanase on 14/06/08.
  */
 
-public class DialogUtils {
+public class Dialog {
 
     private Window window;
 
-    public DialogUtils(Window window) {
+    public Dialog(Window window) {
         this.window = window;
 
         // ControlsFXに対する暫定処理
@@ -50,11 +50,11 @@ public class DialogUtils {
             return;
 
         if (object instanceof String)
-            DialogUtilsImpl.showMessage(this.window, (String) object);
+            DialogImpl.showMessage(this.window, (String) object);
         else if (object instanceof JSObject)
-            DialogUtilsImpl.showMessage(this.window, (JSObject) object);
+            DialogImpl.showMessage(this.window, (JSObject) object);
         else
-            DialogUtilsImpl.showMessage(this.window, object.toString());
+            DialogImpl.showMessage(this.window, object.toString());
     }
 
     public String confirm(Object object) {
@@ -62,10 +62,10 @@ public class DialogUtils {
             return null;
 
         if (object instanceof String)
-            return DialogUtilsImpl.confirm(this.window, (String) object);
+            return DialogImpl.confirm(this.window, (String) object);
         else if (object instanceof JSObject)
-            return DialogUtilsImpl.confirm(this.window, (JSObject) object);
+            return DialogImpl.confirm(this.window, (JSObject) object);
         else
-            return DialogUtilsImpl.confirm(this.window, object.toString());
+            return DialogImpl.confirm(this.window, object.toString());
     }
 }
