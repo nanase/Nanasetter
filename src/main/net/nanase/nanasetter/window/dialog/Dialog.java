@@ -45,7 +45,7 @@ public class Dialog {
         Translations.getTranslation("en").ifPresent(t -> Localization.setLocale(t.getLocale()));
     }
 
-    public void showMessage(Object object) {
+    public void info(Object object) {
         if (object == null)
             return;
 
