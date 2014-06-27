@@ -27,9 +27,7 @@ package net.nanase.nanasetter.window.dialog;
 import impl.org.controlsfx.i18n.Localization;
 import impl.org.controlsfx.i18n.Translations;
 import javafx.stage.Window;
-import net.nanase.nanasetter.utils.JSObjectUtils;
 import netscape.javascript.JSObject;
-import org.controlsfx.dialog.Dialogs;
 
 /**
  * Project: Nanasetter
@@ -52,53 +50,11 @@ public class DialogUtils {
             return;
 
         if (object instanceof String)
-            this.showMessage((String) object);
+            DialogUtilsImpl.showMessage(this.window, (String) object);
         else if (object instanceof JSObject)
-            this.showMessage((JSObject) object);
+            DialogUtilsImpl.showMessage(this.window, (JSObject) object);
         else
-            this.showMessage(object.toString());
-    }
-
-    private void showMessage(String message) {
-        if (message == null)
-            return;
-
-        Dialogs.create()
-                .owner(this.window)
-                .title("")
-                .message(message)
-                .showInformation();
-    }
-
-    private void showMessage(JSObject parameters) {
-        if (parameters == null)
-            return;
-
-        Dialogs dialogs = Dialogs.create().owner(this.window).title("");
-
-        JSObjectUtils.ifExists(parameters, "message", String.class, dialogs::message);
-        JSObjectUtils.ifExists(parameters, "masthead", String.class, dialogs::masthead);
-        JSObjectUtils.ifExists(parameters, "title", String.class, dialogs::title);
-
-        if (JSObjectUtils.hasMember(parameters, "button"))
-            dialogs.actions(ClosingAction.parseFromJS(parameters));
-
-        String type = JSObjectUtils.getMember(parameters, "type", String.class).orElse("info");
-
-        switch (type) {
-            case "warning":
-            case "warn":
-                dialogs.showWarning();
-                break;
-
-            case "error":
-                dialogs.showError();
-                break;
-
-            default:
-                dialogs.showInformation();
-                break;
-        }
+            DialogUtilsImpl.showMessage(this.window, object.toString());
     }
 
     public String confirm(Object object) {
@@ -106,36 +62,10 @@ public class DialogUtils {
             return null;
 
         if (object instanceof String)
-            return this.confirm((String) object);
+            return DialogUtilsImpl.confirm(this.window, (String) object);
         else if (object instanceof JSObject)
-            return this.confirm((JSObject) object);
+            return DialogUtilsImpl.confirm(this.window, (JSObject) object);
         else
-            return this.confirm(object.toString());
-    }
-
-    private String confirm(String message) {
-        return Dialogs.create()
-                .owner(this.window)
-                .title("")
-                .message(message)
-                .showConfirm()
-                .toString()
-                .toLowerCase();
-    }
-
-    private String confirm(JSObject parameters) {
-        if (parameters == null)
-            return null;
-
-        Dialogs dialogs = Dialogs.create().owner(this.window).title("");
-
-        JSObjectUtils.ifExists(parameters, "message", String.class, dialogs::message);
-        JSObjectUtils.ifExists(parameters, "masthead", String.class, dialogs::masthead);
-        JSObjectUtils.ifExists(parameters, "title", String.class, dialogs::title);
-
-        if (JSObjectUtils.hasMember(parameters, "button"))
-            dialogs.actions(ClosingAction.parseFromJS(parameters));
-
-        return dialogs.showConfirm().toString().toLowerCase();
+            return DialogUtilsImpl.confirm(this.window, object.toString());
     }
 }
