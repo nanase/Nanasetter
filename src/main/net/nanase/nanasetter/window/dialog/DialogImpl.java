@@ -50,15 +50,7 @@ class DialogImpl {
         if (parameters == null)
             return;
 
-        Dialogs dialogs = Dialogs.create().owner(window).title("");
-
-        JSObjectUtils.ifExists(parameters, "message", String.class, dialogs::message);
-        JSObjectUtils.ifExists(parameters, "masthead", String.class, dialogs::masthead);
-        JSObjectUtils.ifExists(parameters, "title", String.class, dialogs::title);
-
-        if (JSObjectUtils.hasMember(parameters, "button"))
-            dialogs.actions(ClosingAction.parseFromJS(parameters));
-
+        Dialogs dialogs = getDefaultDialogs(window, parameters);
         String type = JSObjectUtils.getMember(parameters, "type", String.class).orElse("info");
 
         switch (type) {
@@ -91,6 +83,13 @@ class DialogImpl {
         if (parameters == null)
             return null;
 
+        return getDefaultDialogs(window, parameters)
+                .showConfirm()
+                .toString()
+                .toLowerCase();
+    }
+
+    private static Dialogs getDefaultDialogs(Window window, JSObject parameters) {
         Dialogs dialogs = Dialogs.create().owner(window).title("");
 
         JSObjectUtils.ifExists(parameters, "message", String.class, dialogs::message);
@@ -100,6 +99,6 @@ class DialogImpl {
         if (JSObjectUtils.hasMember(parameters, "button"))
             dialogs.actions(ClosingAction.parseFromJS(parameters));
 
-        return dialogs.showConfirm().toString().toLowerCase();
+        return dialogs;
     }
 }
