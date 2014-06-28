@@ -35,7 +35,7 @@ import org.controlsfx.dialog.Dialogs;
  */
 
 class DialogImpl {
-    public static void showMessage(Window window, String message) {
+    public static void info(Window window, String message) {
         if (message == null)
             return;
 
@@ -46,7 +46,7 @@ class DialogImpl {
                 .showInformation();
     }
 
-    public static void showMessage(Window window, JSObject parameters) {
+    public static void info(Window window, JSObject parameters) {
         if (parameters == null)
             return;
 

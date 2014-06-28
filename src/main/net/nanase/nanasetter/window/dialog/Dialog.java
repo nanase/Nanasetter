@@ -50,11 +50,11 @@ public class Dialog {
             return;
 
         if (object instanceof String)
-            DialogImpl.showMessage(this.window, (String) object);
+            DialogImpl.info(this.window, (String) object);
         else if (object instanceof JSObject)
-            DialogImpl.showMessage(this.window, (JSObject) object);
+            DialogImpl.info(this.window, (JSObject) object);
         else
-            DialogImpl.showMessage(this.window, object.toString());
+            DialogImpl.info(this.window, object.toString());
     }
 
     public String confirm(Object object) {
