@@ -34,10 +34,20 @@ import netscape.javascript.JSObject;
  * Created by nanase on 14/06/08.
  */
 
+/**
+ * 一つのオブジェクトをパラメータとして指定し、各種ダイアログ表示を行います。
+ *
+ * @author Tomona Nanase
+ * @since Nanasetter 0.1
+ */
 public class Dialog {
-
     private Window window;
 
+    /**
+     * 親ウィンドウを指定して新しい Dialog クラスのインスタンスを初期化します。
+     *
+     * @param window 親となる Window オブジェクト。
+     */
     public Dialog(Window window) {
         this.window = window;
 
@@ -45,6 +55,11 @@ public class Dialog {
         Translations.getTranslation("en").ifPresent(t -> Localization.setLocale(t.getLocale()));
     }
 
+    /**
+     * パラメータを指定して情報ダイアログを表示します。
+     *
+     * @param object ダイアログのパラメータ。
+     */
     public void info(Object object) {
         if (object == null)
             return;
@@ -57,6 +72,12 @@ public class Dialog {
             DialogImpl.info(this.window, object.toString());
     }
 
+    /**
+     * パラメータを指定して確認ダイアログを表示し、押されたボタンに対応した文字列を返します。
+     *
+     * @param object ダイアログのパラメータ。
+     * @return 押されたボタンに対応した文字列。
+     */
     public String confirm(Object object) {
         if (object == null)
             return null;
