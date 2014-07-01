@@ -188,6 +188,52 @@ public class JSObjectUtilsTest {
     }
 
     @Test
+    public void testProcess() throws Exception {
+        Optional<Integer> number = JSObjectUtils.process(this.jsObject, "number", Integer.class, Optional::of);
+        assertTrue(number.isPresent());
+        assertEquals(42, number.get().longValue());
+
+        Optional<String> text = JSObjectUtils.process(this.jsObject, "text", String.class, Optional::of);
+        assertTrue(text.isPresent());
+        assertEquals("message", text.get());
+
+        // null parameter
+        assertFalse(JSObjectUtils.process(null, "number", Integer.class, Optional::of).isPresent());
+        assertFalse(JSObjectUtils.process(this.jsObject, null, Integer.class, Optional::of).isPresent());
+        assertFalse(JSObjectUtils.process(this.jsObject, "number", null, Optional::of).isPresent());
+        assertFalse(JSObjectUtils.process(this.jsObject, "number", Integer.class, null).isPresent());
+
+        // illegal value
+        assertFalse(JSObjectUtils.process(this.jsObject, "text", Integer.class, Optional::of).isPresent());
+        assertFalse(JSObjectUtils.process(this.jsObject, "number", String.class, Optional::of).isPresent());
+    }
+
+    @Test
+    public void testProcess1() throws Exception {
+        Optional<Integer> number;
+
+        number = JSObjectUtils.process(this.jsObject, "number", Integer.class, Optional::of, () -> Optional.of(53));
+        assertTrue(number.isPresent());
+        assertEquals(42, number.get().longValue());
+
+        // illegal value
+        number = JSObjectUtils.process(this.jsObject, "text", Integer.class, Optional::of, () -> Optional.of(53));
+        assertTrue(number.isPresent());
+        assertEquals(53, number.get().longValue());
+
+        // null parameter
+        assertFalse(JSObjectUtils.process(null, "number", Integer.class, Optional::of, () -> Optional.of(53)).isPresent());
+        assertFalse(JSObjectUtils.process(this.jsObject, null, Integer.class, Optional::of, () -> Optional.of(53)).isPresent());
+        assertFalse(JSObjectUtils.process(this.jsObject, "number", null, Optional::of, () -> Optional.of(53)).isPresent());
+
+        // `function' is null, but it will return 53.
+        assertTrue(JSObjectUtils.process(this.jsObject, "number", Integer.class, null, () -> Optional.of(53)).isPresent());
+
+        // same behavior process(JSObject, String, Class<T>, Function<T, R>).
+        assertTrue(JSObjectUtils.process(this.jsObject, "number", Integer.class, Optional::of, null).isPresent());
+    }
+
+    @Test
     public void testIsArray() throws Exception {
         assertFalse(JSObjectUtils.isArray(this.jsObject));
 
