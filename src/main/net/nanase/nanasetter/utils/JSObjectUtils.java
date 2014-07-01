@@ -48,7 +48,7 @@ public class JSObjectUtils {
      * 指定された JSObject に指定した名前を持つメンバが存在するかの真偽値を取得します。
      *
      * @param object 対象となる JSObject。
-     * @param name 対象のメンバ名。
+     * @param name   対象のメンバ名。
      * @return メンバが存在するとき true、それ以外のとき false。
      */
     public static boolean hasMember(JSObject object, String name) {
@@ -69,7 +69,7 @@ public class JSObjectUtils {
      * 指定された JSObject のメンバの型を文字列として取得します。
      *
      * @param object 対象となる JSObject。
-     * @param name 対象のメンバ名。
+     * @param name   対象のメンバ名。
      * @return JavaScriptでの型名。メンバが存在しない、何らかの理由で取得に失敗した場合は undefined。
      */
     public static String getTypeString(JSObject object, String name) {
@@ -111,11 +111,11 @@ public class JSObjectUtils {
     /**
      * 指定された JSObject に該当する型を持つメンバが存在するときに、指定された関数を実行します。
      *
-     * @param object 対象となる JSObject。
-     * @param name 対象のメンバ名。
-     * @param tClass メンバの {@code Class<T>} クラス。
+     * @param object   対象となる JSObject。
+     * @param name     対象のメンバ名。
+     * @param tClass   メンバの {@code Class<T>} クラス。
      * @param consumer メンバが存在するときに実行される関数インタフェース。
-     * @param <T> メンバの型。
+     * @param <T>      メンバの型。
      */
     public static <T> void ifExists(JSObject object, String name, Class<T> tClass, Consumer<T> consumer) {
         if (object == null)
@@ -133,12 +133,12 @@ public class JSObjectUtils {
     /**
      * 指定された JSObject に該当する型を持つメンバの存在によって、指定された関数を実行します。
      *
-     * @param object 対象となる JSObject。
-     * @param name 対象のメンバ名。
-     * @param tClass メンバの {@code Class<T>} クラス。
+     * @param object   対象となる JSObject。
+     * @param name     対象のメンバ名。
+     * @param tClass   メンバの {@code Class<T>} クラス。
      * @param consumer メンバが存在するときに実行される関数インタフェース。
-     * @param elseRun メンバが存在しない時に実行される関数インタフェース。
-     * @param <T> メンバの型。
+     * @param elseRun  メンバが存在しない時に実行される関数インタフェース。
+     * @param <T>      メンバの型。
      */
     public static <T> void ifExists(JSObject object, String name, Class<T> tClass, Consumer<T> consumer, Runnable elseRun) {
         if (object == null)
@@ -169,7 +169,7 @@ public class JSObjectUtils {
      * 指定された JSObject のメンバが配列であるかの真偽値を取得します。
      *
      * @param object 対象となる JSObject。
-     * @param name 対象のメンバ名。
+     * @param name   対象のメンバ名。
      * @return 配列であるとき true、それ以外のとき false。
      */
     public static boolean isArray(JSObject object, String name) {
@@ -180,9 +180,9 @@ public class JSObjectUtils {
      * 指定された JSObject のメンバの値を取得します。
      *
      * @param object 対象となる JSObject。
-     * @param name 対象のメンバ名。
+     * @param name   対象のメンバ名。
      * @param tClass メンバの {@code Class<T>} クラス。
-     * @param <T> メンバの型。
+     * @param <T>    メンバの型。
      * @return メンバの値を内包した {@code Optional<T>}。
      */
     public static <T> Optional<T> getMember(JSObject object, String name, Class<T> tClass) {
@@ -205,7 +205,7 @@ public class JSObjectUtils {
      *
      * @param object 対象となる JSObject。
      * @param tClass 配列の {@code Class<T>} クラス。
-     * @param <T> 配列の型。
+     * @param <T>    配列の型。
      * @return 配列を内包した {@code Optional<List<T>>}。
      */
     public static <T> Optional<List<T>> getArray(JSObject object, Class<T> tClass) {
@@ -234,12 +234,12 @@ public class JSObjectUtils {
     }
 
     /**
-     *指定された JSObject のメンバを配列として複数の値を取得します。
+     * 指定された JSObject のメンバを配列として複数の値を取得します。
      *
      * @param object 対象となる JSObject。
-     * @param name 対象のメンバ名。
+     * @param name   対象のメンバ名。
      * @param tClass 配列の {@code Class<T>} クラス。
-     * @param <T> 配列の型。
+     * @param <T>    配列の型。
      * @return 配列を内包した {@code Optional<List<T>>}。
      */
     public static <T> Optional<List<T>> getArray(JSObject object, String name, Class<T> tClass) {
