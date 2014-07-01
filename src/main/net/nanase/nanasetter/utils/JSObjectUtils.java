@@ -163,6 +163,18 @@ public class JSObjectUtils {
             elseRun.run();
     }
 
+    /**
+     * 指定された JSObject に該当する型を持つメンバを加工し、取得します。
+     *
+     * @param object   対象となる JSObject。
+     * @param name     対象のメンバ名。
+     * @param tClass   メンバの {@code Class<T>} クラス。
+     * @param function {@code <T>} 型のオブジェクトを加工し、{@code Optional<R>} 型に変換する
+     *                 {@code Function<T, Optional<R>>} インタフェース。
+     * @param <T>      メンバの型。
+     * @param <R>      取得される型。
+     * @return 加工されたメンバを内包する {@code Optional<R>} オブジェクト。
+     */
     public static <T, R> Optional<R> process(
             JSObject object,
             String name,
@@ -181,6 +193,20 @@ public class JSObjectUtils {
         return process(object, name, tClass, function, null);
     }
 
+    /**
+     * 指定された JSObject に該当する型を持つメンバを加工し、取得します。
+     *
+     * @param object   対象となる JSObject。
+     * @param name     対象のメンバ名。
+     * @param tClass   メンバの {@code Class<T>} クラス。
+     * @param function {@code <T>} 型のオブジェクトを加工し、{@code Optional<R>} 型に変換する
+     *                 {@code Function<T, Optional<R>>} インタフェース。
+     * @param orElse   メンバが存在しなかったときに実行される {@code Supplier<Optional<R>>} インタフェース。
+     *                 {@code object}、{@code name} および {@code tClass} が null である場合はこのインタフェースは実行されません。
+     * @param <T>      メンバの型。
+     * @param <R>      取得される型。
+     * @return 加工されたメンバを内包する {@code Optional<R>} オブジェクト。
+     */
     public static <T, R> Optional<R> process(
             JSObject object,
             String name,
