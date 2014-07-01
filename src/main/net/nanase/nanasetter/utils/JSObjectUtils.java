@@ -142,7 +142,13 @@ public class JSObjectUtils {
      * @param elseRun  メンバが存在しない時に実行される関数インタフェース。
      * @param <T>      メンバの型。
      */
-    public static <T> void ifExists(JSObject object, String name, Class<T> tClass, Consumer<T> consumer, Runnable elseRun) {
+    public static <T> void ifExists(
+            JSObject object,
+            String name,
+            Class<T> tClass,
+            Consumer<T> consumer,
+            Runnable elseRun) {
+
         if (object == null)
             return;
 
