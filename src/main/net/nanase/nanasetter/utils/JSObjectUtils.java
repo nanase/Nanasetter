@@ -36,6 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * JSObject の機能を拡張します。
@@ -153,6 +155,50 @@ public class JSObjectUtils {
             consumer.accept(member.get());
         else if (elseRun != null)
             elseRun.run();
+    }
+
+    public static <T, R> Optional<R> process(
+            JSObject object,
+            String name,
+            Class<T> tClass,
+            Function<T, Optional<R>> function) {
+
+        if (object == null)
+            return Optional.empty();
+
+        if (name == null)
+            return Optional.empty();
+
+        if (tClass == null)
+            return Optional.empty();
+
+        return process(object, name, tClass, function, null);
+    }
+
+    public static <T, R> Optional<R> process(
+            JSObject object,
+            String name,
+            Class<T> tClass,
+            Function<T, Optional<R>> function,
+            Supplier<Optional<R>> orElse) {
+
+        if (object == null)
+            return Optional.empty();
+
+        if (name == null)
+            return Optional.empty();
+
+        if (tClass == null)
+            return Optional.empty();
+
+        Optional<T> member = getMember(object, name, tClass);
+
+        if (member.isPresent() && function != null)
+            return function.apply(member.get());
+        else if (orElse != null)
+            return orElse.get();
+        else
+            return Optional.empty();
     }
 
     /**
