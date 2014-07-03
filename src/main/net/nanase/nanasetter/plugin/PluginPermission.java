@@ -60,7 +60,7 @@ public enum PluginPermission {
      * 設定権限
      * リストの作成、変更、プロフィールの変更、アイコン、ヘッダー画像の設定が可能です。
      */
-    configurate,
+    configure,
 
     /**
      * ダイレクトメッセージ権限。
