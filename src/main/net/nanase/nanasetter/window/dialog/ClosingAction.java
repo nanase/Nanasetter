@@ -134,4 +134,27 @@ class ClosingAction extends AbstractAction {
                 return name;
         }
     }
+
+    private static String getButtonTypeString(String name) {
+        switch (name.toLowerCase()) {
+            case "y":
+            case "yes":
+                return "yes";
+
+            case "n":
+            case "no":
+                return "no";
+
+            case "c":
+            case "cancel":
+                return "cancel";
+
+            case "o":
+            case "ok":
+                return "ok";
+
+            default:
+                return "unknown";
+        }
+    }
 }
