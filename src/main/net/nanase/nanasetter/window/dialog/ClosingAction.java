@@ -45,9 +45,12 @@ import static net.nanase.nanasetter.utils.JSObjectUtils.*;
 
 class ClosingAction extends AbstractAction {
 
+    private final String buttonTypeString;
+
     public ClosingAction(String text, String type) {
         super(text);
         ButtonBar.setType(this, convertButtonType(type));
+        this.buttonTypeString = getButtonTypeString(type);
     }
 
     /**
@@ -59,6 +62,11 @@ class ClosingAction extends AbstractAction {
     @Override
     public void handle(ActionEvent event) {
         ((Dialog) event.getSource()).hide();
+    }
+
+    @Override
+    public String toString() {
+        return this.buttonTypeString;
     }
 
     public static List<ClosingAction> parseFromJS(JSObject jsObject) {
