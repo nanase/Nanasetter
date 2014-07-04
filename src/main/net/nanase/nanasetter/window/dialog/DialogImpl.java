@@ -89,6 +89,26 @@ class DialogImpl {
                 .toLowerCase();
     }
 
+    public static String input(Window window, String message) {
+        return Dialogs.create()
+                .owner(window)
+                .title("")
+                .message(message)
+                .showTextInput()
+                .orElse(null);
+    }
+
+    public static String input(Window window, JSObject parameters) {
+        if (parameters == null)
+            return null;
+
+        Dialogs dialogs = getDefaultDialogs(window, parameters);
+        String defaultText = JSObjectUtils.getMember(parameters, "text", String.class).orElse("");
+
+        return dialogs.showTextInput(defaultText)
+                .orElse(null);
+    }
+
     private static Dialogs getDefaultDialogs(Window window, JSObject parameters) {
         Dialogs dialogs = Dialogs.create().owner(window).title("");
 
