@@ -89,4 +89,22 @@ public class Dialog {
         else
             return DialogImpl.confirm(this.window, object.toString());
     }
+
+    /**
+     * パラメータを指定して入力ダイアログを表示し、テキストボックスに入力された文字列を返します。
+     *
+     * @param object ダイアログのパラメータ。
+     * @return テキストボックスに入力された文字列。
+     */
+    public String input(Object object) {
+        if (object == null)
+            return null;
+
+        if (object instanceof String)
+            return DialogImpl.input(this.window, (String) object);
+        else if (object instanceof JSObject)
+            return DialogImpl.input(this.window, (JSObject) object);
+        else
+            return DialogImpl.input(this.window, object.toString());
+    }
 }
