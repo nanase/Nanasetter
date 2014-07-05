@@ -78,11 +78,11 @@ public enum PluginPermission {
      * PluginPermission 列挙体に属する列挙値すべてを含んだ EnumSet オブジェクトを表します。
      * この権限を持つプラグインはすべての Twitter 機能を使用します。
      */
-    public final static EnumSet<PluginPermission> full = EnumSet.allOf(PluginPermission.class);
+    public final static EnumSet<PluginPermission> FULL = EnumSet.allOf(PluginPermission.class);
 
     /**
      * PluginPermission 列挙体に属する列挙値の何れも含まない EnumSet オブジェクトを表します。
      * この権限を持つプラグインは一切の Twitter 機能を使用しません。
      */
-    public final static EnumSet<PluginPermission> none = EnumSet.noneOf(PluginPermission.class);
+    public final static EnumSet<PluginPermission> NONE = EnumSet.noneOf(PluginPermission.class);
 }
