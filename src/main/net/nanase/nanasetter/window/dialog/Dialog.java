@@ -107,4 +107,20 @@ public class Dialog {
         else
             return DialogImpl.input(this.window, object.toString());
     }
+
+    /**
+     * パラメータを指定して選択ダイアログを表示し、コンボボックスで選択された文字列を返します。
+     *
+     * @param object ダイアログのパラメータ。
+     * @return コンボボックスで選択された文字列。
+     */
+    public String choice(Object object) {
+        if (object == null)
+            return null;
+
+        if (object instanceof JSObject)
+            return DialogImpl.choice(this.window, (JSObject) object);
+        else
+            return null;
+    }
 }
