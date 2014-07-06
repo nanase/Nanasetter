@@ -330,7 +330,7 @@ public class JSObjectUtils {
         if (!isArray(object, name))
             return Optional.empty();
 
-        Optional<JSObject> array = JSObjectUtils.getMember(object, "array", JSObject.class);
+        Optional<JSObject> array = JSObjectUtils.getMember(object, name, JSObject.class);
 
         if (!array.isPresent())
             return Optional.empty();
