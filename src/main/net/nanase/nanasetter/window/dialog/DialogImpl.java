@@ -29,6 +29,9 @@ import net.nanase.nanasetter.utils.JSObjectUtils;
 import netscape.javascript.JSObject;
 import org.controlsfx.dialog.Dialogs;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 /**
  * Project: Nanasetter
  * Created by nanase on 14/06/27.
@@ -107,6 +110,29 @@ class DialogImpl {
 
         return dialogs.showTextInput(defaultText)
                 .orElse(null);
+    }
+
+    public static String choice(Window window, JSObject parameters) {
+        if (parameters == null)
+            return null;
+
+        Dialogs dialogs = getDefaultDialogs(window, parameters);
+
+        Collection<String> choices;
+        String defaultChoice = null;
+
+        if (JSObjectUtils.isArray(parameters))
+            choices = JSObjectUtils.getArray(parameters, String.class).orElse(new ArrayList<>());
+        else if (JSObjectUtils.isArray(parameters, "choices")) {
+            choices = JSObjectUtils.getArray(parameters, "choices", String.class).orElse(new ArrayList<>());
+            defaultChoice = JSObjectUtils.getMember(parameters, "defaultChoice", String.class).orElse(null);
+        } else
+            return null;
+
+        if (defaultChoice == null)
+            return dialogs.showChoices(choices).orElse(null);
+        else
+            return dialogs.showChoices(defaultChoice, choices).orElse(null);
     }
 
     private static Dialogs getDefaultDialogs(Window window, JSObject parameters) {
