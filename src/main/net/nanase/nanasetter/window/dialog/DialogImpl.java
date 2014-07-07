@@ -27,6 +27,7 @@ package net.nanase.nanasetter.window.dialog;
 import javafx.stage.Window;
 import net.nanase.nanasetter.utils.JSObjectUtils;
 import netscape.javascript.JSObject;
+import org.controlsfx.dialog.DialogStyle;
 import org.controlsfx.dialog.Dialogs;
 
 import java.util.ArrayList;
@@ -42,9 +43,7 @@ class DialogImpl {
         if (message == null)
             return;
 
-        Dialogs.create()
-                .owner(window)
-                .title("")
+        createDefaultDialogs(window)
                 .message(message)
                 .showInformation();
     }
@@ -53,7 +52,9 @@ class DialogImpl {
         if (parameters == null)
             return;
 
-        Dialogs dialogs = getDefaultDialogs(window, parameters);
+        Dialogs dialogs = createDefaultDialogs(window);
+        applyParameter(dialogs, parameters);
+
         String type = JSObjectUtils.getMember(parameters, "type", String.class).orElse("info");
 
         switch (type) {
@@ -73,9 +74,7 @@ class DialogImpl {
     }
 
     public static String confirm(Window window, String message) {
-        return Dialogs.create()
-                .owner(window)
-                .title("")
+        return createDefaultDialogs(window)
                 .message(message)
                 .showConfirm()
                 .toString()
@@ -86,16 +85,16 @@ class DialogImpl {
         if (parameters == null)
             return null;
 
-        return getDefaultDialogs(window, parameters)
-                .showConfirm()
+        Dialogs dialogs = createDefaultDialogs(window);
+        applyParameter(dialogs, parameters);
+
+        return dialogs.showConfirm()
                 .toString()
                 .toLowerCase();
     }
 
     public static String input(Window window, String message) {
-        return Dialogs.create()
-                .owner(window)
-                .title("")
+        return createDefaultDialogs(window)
                 .message(message)
                 .showTextInput()
                 .orElse(null);
@@ -105,7 +104,9 @@ class DialogImpl {
         if (parameters == null)
             return null;
 
-        Dialogs dialogs = getDefaultDialogs(window, parameters);
+        Dialogs dialogs = createDefaultDialogs(window);
+        applyParameter(dialogs, parameters);
+
         String defaultText = JSObjectUtils.getMember(parameters, "text", String.class).orElse("");
 
         return dialogs.showTextInput(defaultText)
@@ -116,7 +117,8 @@ class DialogImpl {
         if (parameters == null)
             return null;
 
-        Dialogs dialogs = getDefaultDialogs(window, parameters);
+        Dialogs dialogs = createDefaultDialogs(window);
+        applyParameter(dialogs, parameters);
 
         Collection<String> choices;
         String defaultChoice = null;
@@ -135,16 +137,22 @@ class DialogImpl {
             return dialogs.showChoices(defaultChoice, choices).orElse(null);
     }
 
-    private static Dialogs getDefaultDialogs(Window window, JSObject parameters) {
-        Dialogs dialogs = Dialogs.create().owner(window).title("");
-
+    private static void applyParameter(Dialogs dialogs, JSObject parameters) {
         JSObjectUtils.ifExists(parameters, "message", String.class, dialogs::message);
         JSObjectUtils.ifExists(parameters, "masthead", String.class, dialogs::masthead);
         JSObjectUtils.ifExists(parameters, "title", String.class, dialogs::title);
 
         if (JSObjectUtils.hasMember(parameters, "button"))
             dialogs.actions(ClosingAction.parseFromJS(parameters));
+    }
 
-        return dialogs;
+    private static Dialogs createDefaultDialogs(Window window) {
+        return Dialogs.create()
+                .owner(window)
+                .title(Dialogs.USE_DEFAULT)
+                //.message(Dialogs.USE_DEFAULT)
+                //.masthead(Dialogs.USE_DEFAULT)
+                //.lightweight()
+                .style(DialogStyle.CROSS_PLATFORM_DARK);
     }
 }
