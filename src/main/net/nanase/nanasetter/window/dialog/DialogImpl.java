@@ -27,11 +27,16 @@ package net.nanase.nanasetter.window.dialog;
 import javafx.stage.Window;
 import net.nanase.nanasetter.utils.JSObjectUtils;
 import netscape.javascript.JSObject;
+import org.controlsfx.control.action.Action;
+import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.DialogStyle;
 import org.controlsfx.dialog.Dialogs;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Project: Nanasetter
@@ -137,6 +142,43 @@ class DialogImpl {
             return dialogs.showChoices(defaultChoice, choices).orElse(null);
     }
 
+    public static String command(Window window, JSObject parameters) {
+        if (parameters == null)
+            return null;
+
+        Dialogs dialogs = createDefaultDialogs(window);
+        applyParameter(dialogs, parameters);
+
+        Action action = dialogs.showCommandLinks(convertToCommandLink(parameters));
+
+        if (Dialog.Actions.CANCEL.equals(action))
+            return null;
+        else
+            return action.textProperty().get();
+    }
+
+    private static List<Dialogs.CommandLink> convertToCommandLink(JSObject parameters) {
+        if (!JSObjectUtils.hasMember(parameters, "commands"))
+            return new ArrayList<>();
+
+        JSObject commands = JSObjectUtils.getMember(parameters, "commands", JSObject.class).get();
+
+        // for String array
+        List<Dialogs.CommandLink> commandLinks = JSObjectUtils.getArray(commands, String.class)
+                .map(s -> s.stream().map(t -> new Dialogs.CommandLink(t, null)))
+                .orElse(Stream.<Dialogs.CommandLink>empty())
+                .collect(Collectors.toList());
+
+        if (commandLinks.size() > 0)
+            return commandLinks;
+
+        // for JSObject array
+        Stream<String> members = Stream.of(JSObjectUtils.getMembersList(commands).orElse(new String[0]));
+
+        return members.map(m -> new Dialogs.CommandLink(m, JSObjectUtils.getMember(commands, m, String.class)
+                .orElse(null))).collect(Collectors.toList());
+    }
+
     private static void applyParameter(Dialogs dialogs, JSObject parameters) {
         JSObjectUtils.ifExists(parameters, "message", String.class, dialogs::message);
         JSObjectUtils.ifExists(parameters, "masthead", String.class, dialogs::masthead);
@@ -150,9 +192,9 @@ class DialogImpl {
         return Dialogs.create()
                 .owner(window)
                 .title(Dialogs.USE_DEFAULT)
-                //.message(Dialogs.USE_DEFAULT)
-                //.masthead(Dialogs.USE_DEFAULT)
-                //.lightweight()
+                        //.message(Dialogs.USE_DEFAULT)
+                        //.masthead(Dialogs.USE_DEFAULT)
+                        //.lightweight()
                 .style(DialogStyle.CROSS_PLATFORM_DARK);
     }
 }
