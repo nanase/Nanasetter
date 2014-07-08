@@ -123,4 +123,20 @@ public class Dialog {
         else
             return null;
     }
+
+    /**
+     * パラメータを指定して命令選択ダイアログを表示し、クリックされた命令の文字列を返します。
+     *
+     * @param object ダイアログのパラメータ。
+     * @return クリックされた命令の文字列。
+     */
+    public String command(Object object) {
+        if (object == null)
+            return null;
+
+        if (object instanceof JSObject)
+            return DialogImpl.command(this.window, (JSObject) object);
+        else
+            return null;
+    }
 }
