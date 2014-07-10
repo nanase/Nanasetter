@@ -38,6 +38,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
  * JSObject の機能を拡張します。
@@ -95,19 +96,19 @@ public class JSObjectUtils {
      * 指定された JSObject のメンバの一覧を取得します。
      *
      * @param object 対象となる JSObject。
-     * @return メンバの一覧を内包した {@code Optional<String[]>}。
+     * @return メンバの一覧を内包した {@code Stream<String>}。
      */
-    public static Optional<String[]> getMembersList(JSObject object) {
+    public static Stream<String> getMembersList(JSObject object) {
         if (object == null)
-            return Optional.empty();
+            return Stream.empty();
 
         try {
-            return Optional.of(((String) object.eval("Object.keys(this).toString()")).split(","));
+            return Stream.of(((String) object.eval("Object.keys(this).toString()")).split(","));
         } catch (JSException e) {
             //
         }
 
-        return Optional.empty();
+        return Stream.empty();
     }
 
     /**
@@ -284,17 +285,17 @@ public class JSObjectUtils {
      * @param object 対象となる JSObject。
      * @param tClass 配列の {@code Class<T>} クラス。
      * @param <T>    配列の型。
-     * @return 配列を内包した {@code Optional<List<T>>}。
+     * @return 配列を内包した {@code Stream<T>}。
      */
-    public static <T> Optional<List<T>> getArray(JSObject object, Class<T> tClass) {
+    public static <T> Stream<T> getArray(JSObject object, Class<T> tClass) {
         if (object == null)
-            return Optional.empty();
+            return Stream.empty();
 
         if (tClass == null)
-            return Optional.empty();
+            return Stream.empty();
 
         if (!isArray(object))
-            return Optional.empty();
+            return Stream.empty();
 
         int length = getMember(object, "length", Integer.class).get();
         List<T> list = new ArrayList<>(length);
@@ -305,10 +306,10 @@ public class JSObjectUtils {
             if (tClass.isInstance(obj))
                 list.add(tClass.cast(obj));
             else
-                return Optional.empty();
+                return Stream.empty();
         }
 
-        return Optional.of(list);
+        return list.stream();
     }
 
     /**
@@ -318,22 +319,22 @@ public class JSObjectUtils {
      * @param name   対象のメンバ名。
      * @param tClass 配列の {@code Class<T>} クラス。
      * @param <T>    配列の型。
-     * @return 配列を内包した {@code Optional<List<T>>}。
+     * @return 配列を内包した {@code Stream<T>}。
      */
-    public static <T> Optional<List<T>> getArray(JSObject object, String name, Class<T> tClass) {
+    public static <T> Stream<T> getArray(JSObject object, String name, Class<T> tClass) {
         if (object == null)
-            return Optional.empty();
+            return Stream.empty();
 
         if (tClass == null)
-            return Optional.empty();
+            return Stream.empty();
 
         if (!isArray(object, name))
-            return Optional.empty();
+            return Stream.empty();
 
         Optional<JSObject> array = JSObjectUtils.getMember(object, name, JSObject.class);
 
         if (!array.isPresent())
-            return Optional.empty();
+            return Stream.empty();
 
         return getArray(array.get(), tClass);
     }
