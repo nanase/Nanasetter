@@ -304,7 +304,7 @@ public class JSObjectUtils {
             Object obj = object.getSlot(i);
 
             if (tClass.isInstance(obj))
-                list.add(tClass.cast(obj));
+                list.add(i, tClass.cast(obj));
             else
                 return Stream.empty();
         }
