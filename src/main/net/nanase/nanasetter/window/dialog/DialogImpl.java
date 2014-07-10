@@ -32,9 +32,7 @@ import org.controlsfx.dialog.Dialog;
 import org.controlsfx.dialog.DialogStyle;
 import org.controlsfx.dialog.Dialogs;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -129,9 +127,9 @@ class DialogImpl {
         String defaultChoice = null;
 
         if (JSObjectUtils.isArray(parameters))
-            choices = JSObjectUtils.getArray(parameters, String.class).orElse(new ArrayList<>());
+            choices = JSObjectUtils.getArray(parameters, String.class).collect(Collectors.toList());
         else if (JSObjectUtils.isArray(parameters, "choices")) {
-            choices = JSObjectUtils.getArray(parameters, "choices", String.class).orElse(new ArrayList<>());
+            choices = JSObjectUtils.getArray(parameters, "choices", String.class).collect(Collectors.toList());
             defaultChoice = JSObjectUtils.getMember(parameters, "defaultChoice", String.class).orElse(null);
         } else
             return null;
@@ -149,7 +147,7 @@ class DialogImpl {
         Dialogs dialogs = createDefaultDialogs(window);
         applyParameter(dialogs, parameters);
 
-        Action action = dialogs.showCommandLinks(convertToCommandLink(parameters));
+        Action action = dialogs.showCommandLinks(convertToCommandLink(parameters).collect(Collectors.toList()));
 
         if (Dialog.Actions.CANCEL.equals(action))
             return null;
@@ -157,26 +155,23 @@ class DialogImpl {
             return action.textProperty().get();
     }
 
-    private static List<Dialogs.CommandLink> convertToCommandLink(JSObject parameters) {
+    private static Stream<Dialogs.CommandLink> convertToCommandLink(JSObject parameters) {
         if (!JSObjectUtils.hasMember(parameters, "commands"))
-            return new ArrayList<>();
+            return Stream.empty();
 
         JSObject commands = JSObjectUtils.getMember(parameters, "commands", JSObject.class).get();
 
-        // for String array
-        List<Dialogs.CommandLink> commandLinks = JSObjectUtils.getArray(commands, String.class)
-                .map(s -> s.stream().map(t -> new Dialogs.CommandLink(t, null)))
-                .orElse(Stream.<Dialogs.CommandLink>empty())
-                .collect(Collectors.toList());
 
-        if (commandLinks.size() > 0)
-            return commandLinks;
-
-        // for JSObject array
-        Stream<String> members = Stream.of(JSObjectUtils.getMembersList(commands).orElse(new String[0]));
-
-        return members.map(m -> new Dialogs.CommandLink(m, JSObjectUtils.getMember(commands, m, String.class)
-                .orElse(null))).collect(Collectors.toList());
+        if (JSObjectUtils.isArray(commands)) {
+            // for String array
+            return JSObjectUtils.getArray(commands, String.class)
+                    .map(t -> new Dialogs.CommandLink(t, null));
+        } else {
+            // for JSObject array
+            return JSObjectUtils.getMembersList(commands)
+                    .map(m -> new Dialogs.CommandLink(m, JSObjectUtils.getMember(commands, m, String.class)
+                            .orElse(null)));
+        }
     }
 
     private static void applyParameter(Dialogs dialogs, JSObject parameters) {
@@ -185,7 +180,7 @@ class DialogImpl {
         JSObjectUtils.ifExists(parameters, "title", String.class, dialogs::title);
 
         if (JSObjectUtils.hasMember(parameters, "button"))
-            dialogs.actions(ClosingAction.parseFromJS(parameters));
+            dialogs.actions(ClosingAction.parseFromJS(parameters).collect(Collectors.toList()));
     }
 
     private static Dialogs createDefaultDialogs(Window window) {

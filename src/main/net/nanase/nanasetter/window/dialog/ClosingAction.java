@@ -69,32 +69,25 @@ class ClosingAction extends AbstractAction {
         return this.buttonTypeString;
     }
 
-    public static List<ClosingAction> parseFromJS(JSObject jsObject) {
+    public static Stream<ClosingAction> parseFromJS(JSObject jsObject) {
         Object obj = getMember(jsObject, "button", Object.class).orElse(null);
-
-        List<ClosingAction> res = new ArrayList<>();
 
         if (obj instanceof JSObject) {
             JSObject buttonObject = (JSObject) obj;
 
             if (isArray(buttonObject))
-                getArray(buttonObject, String.class)
-                        .ifPresent(s -> res.addAll(s.stream()
-                                .map(k -> new ClosingAction(getButtonDefaultText(k), k))
-                                .collect(Collectors.toList())));
+                return getArray(buttonObject, String.class)
+                        .map(k -> new ClosingAction(getButtonDefaultText(k), k));
             else
-                getMembersList(buttonObject)
-                        .ifPresent(m -> res.addAll(Stream.of(m)
-                                .map(s -> new ClosingAction(getMember(buttonObject, s, String.class)
-                                        .orElse(getButtonDefaultText(s)), s))
-                                .collect(Collectors.toList())));
+                return getMembersList(buttonObject)
+                        .map(s -> new ClosingAction(getMember(buttonObject, s, String.class)
+                                .orElse(getButtonDefaultText(s)), s));
         } else if (obj instanceof String) {
-            res.addAll(Stream.of(((String) obj).split(""))
-                    .map(k -> new ClosingAction(getButtonDefaultText(k), k))
-                    .collect(Collectors.toList()));
+            return Stream.of(((String) obj).split(""))
+                    .map(k -> new ClosingAction(getButtonDefaultText(k), k));
         }
 
-        return res;
+        return Stream.empty();
     }
 
     private static ButtonBar.ButtonType convertButtonType(String name) {

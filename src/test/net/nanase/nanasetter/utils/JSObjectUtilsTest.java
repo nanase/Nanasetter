@@ -91,7 +91,7 @@ public class JSObjectUtilsTest {
     @Test
     public void testGetMembersList() throws Exception {
         assertArrayEquals(new String[]{"text", "number", "boolean", "func", "object", "array"},
-                JSObjectUtils.getMembersList(this.jsObject).get());
+                JSObjectUtils.getMembersList(this.jsObject).toArray(String[]::new));
     }
 
     @Test
@@ -284,35 +284,35 @@ public class JSObjectUtilsTest {
         Optional<JSObject> array = JSObjectUtils.getMember(this.jsObject, "array", JSObject.class);
         assertTrue(array.isPresent());
 
-        assertTrue(JSObjectUtils.getArray(array.get(), Integer.class).isPresent());
+        assertTrue(JSObjectUtils.getArray(array.get(), Integer.class).findAny().isPresent());
 
         // not array
-        assertFalse(JSObjectUtils.getArray(this.jsObject, Object.class).isPresent());
+        assertFalse(JSObjectUtils.getArray(this.jsObject, Object.class).findAny().isPresent());
 
         // null parameter
-        assertFalse(JSObjectUtils.getArray(null, Integer.class).isPresent());
-        assertFalse(JSObjectUtils.getArray(array.get(), null).isPresent());
-        assertFalse(JSObjectUtils.getArray(null, null).isPresent());
+        assertFalse(JSObjectUtils.getArray(null, Integer.class).findAny().isPresent());
+        assertFalse(JSObjectUtils.getArray(array.get(), null).findAny().isPresent());
+        assertFalse(JSObjectUtils.getArray(null, null).findAny().isPresent());
 
         // type illegal
-        assertFalse(JSObjectUtils.getArray(array.get(), String.class).isPresent());
-        assertFalse(JSObjectUtils.getArray(array.get(), Double.class).isPresent());
+        assertFalse(JSObjectUtils.getArray(array.get(), String.class).findAny().isPresent());
+        assertFalse(JSObjectUtils.getArray(array.get(), Double.class).findAny().isPresent());
     }
 
     @Test
     public void testGetArray1() throws Exception {
-        assertTrue(JSObjectUtils.getArray(this.jsObject, "array", Integer.class).isPresent());
+        assertTrue(JSObjectUtils.getArray(this.jsObject, "array", Integer.class).findAny().isPresent());
 
         // not array
-        assertFalse(JSObjectUtils.getArray(this.jsObject, "text", String.class).isPresent());
+        assertFalse(JSObjectUtils.getArray(this.jsObject, "text", String.class).findAny().isPresent());
 
         // null parameter
-        assertFalse(JSObjectUtils.getArray(null, "array", Integer.class).isPresent());
-        assertFalse(JSObjectUtils.getArray(this.jsObject, null, Integer.class).isPresent());
-        assertFalse(JSObjectUtils.getArray(this.jsObject, "array", null).isPresent());
-        assertFalse(JSObjectUtils.getArray(null, null, null).isPresent());
+        assertFalse(JSObjectUtils.getArray(null, "array", Integer.class).findAny().isPresent());
+        assertFalse(JSObjectUtils.getArray(this.jsObject, null, Integer.class).findAny().isPresent());
+        assertFalse(JSObjectUtils.getArray(this.jsObject, "array", null).findAny().isPresent());
+        assertFalse(JSObjectUtils.getArray(null, null, null).findAny().isPresent());
 
         // type illegal
-        assertFalse(JSObjectUtils.getArray(this.jsObject, "array", Boolean.class).isPresent());
+        assertFalse(JSObjectUtils.getArray(this.jsObject, "array", Boolean.class).findAny().isPresent());
     }
 }
