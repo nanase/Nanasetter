@@ -46,43 +46,60 @@ public enum PluginPermission {
      * 読み取り権限。
      * タイムラインの読み取り、リストの読み取り、ツイートの表示などが可能です。
      */
-    READ_REST,
+    READ_REST("rest"),
 
     /**
      * 書き込み権限。
      * ツイート送信と削除、リツイート、お気に入りが可能です。
      */
-    WRITE,
+    WRITE("write"),
 
     /**
      * ストリーム読み取り権限。
      * ストリーム通知の受け取りが可能です。
      */
-    READ_STREAMING,
+    READ_STREAMING("stream"),
 
     /**
      * 拡張権限。
      * レートリミットの取得、ユーザ提案の取得などが可能です。
      */
-    EXTEND,
+    EXTEND("extend"),
 
     /**
      * 設定権限。
      * リストの作成、変更、プロフィールの変更、アイコン、ヘッダー画像の設定が可能です。
      */
-    CONFIGURE,
+    CONFIGURE("config"),
 
     /**
      * ダイレクトメッセージアクセス権限。
      * ダイレクトメッセージの読み込み、送信、削除が可能です。
      */
-    ACCESS_DIRECT_MESSAGE,
+    ACCESS_DIRECT_MESSAGE("directMessage"),
 
     /**
      * リスク権限。
      * ブロック、フォローとフォロー解除などが可能です。
      */
-    RISK,;
+    RISK("risk"),;
+
+    //
+
+    private final String shortName;
+
+    private PluginPermission(String shortName) {
+        this.shortName = shortName;
+    }
+
+    /**
+     * この PluginPermission の値に割り当てられている短縮名を取得します。
+     *
+     * @return この列挙値に割り当てられている短縮名。
+     */
+    public String getShortName() {
+        return this.shortName;
+    }
 
     /**
      * PluginPermission 列挙体に属する列挙値すべてを含んだ EnumSet オブジェクトを表します。
