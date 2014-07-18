@@ -24,7 +24,11 @@
 
 package net.nanase.nanasetter.plugin;
 
+import net.nanase.nanasetter.utils.JSObjectUtils;
+import netscape.javascript.JSObject;
+
 import java.util.EnumSet;
+import java.util.stream.Collectors;
 
 /**
  * Project: Nanasetter
@@ -102,6 +106,17 @@ public enum PluginPermission {
     }
 
     /**
+     * 文字列の配列を格納した JSObject を解析し、PluginPermission のセットを生成します。
+     *
+     * @param jsObject 文字列の配列 permission を格納した JSObject。
+     * @return 生成された {@code EnumSet<PluginPermission>}。
+     */
+    public static EnumSet<PluginPermission> parse(JSObject jsObject) {
+        return EnumSet.copyOf(JSObjectUtils.getArray(jsObject, "permission", String.class)
+                .map(PluginPermission::searchMember).collect(Collectors.toList()));
+    }
+
+    /**
      * PluginPermission 列挙体に属する列挙値すべてを含んだ EnumSet オブジェクトを表します。
      * この権限を持つプラグインはすべての Twitter 機能を使用します。
      */
@@ -112,4 +127,23 @@ public enum PluginPermission {
      * この権限を持つプラグインは一切の Twitter 機能を使用しません。
      */
     public final static EnumSet<PluginPermission> NONE = EnumSet.noneOf(PluginPermission.class);
+
+    private final static PluginPermission[] permissions = PluginPermission.values();
+
+    private static PluginPermission searchMember(String name) throws IllegalArgumentException {
+        if (name == null)
+            throw new IllegalArgumentException();
+
+        String fullName = name.toUpperCase();
+
+        for (PluginPermission p : permissions) {
+            if (p.name().equals(fullName))
+                return p;
+
+            if (p.getShortName().equals(name))
+                return p;
+        }
+
+        throw new IllegalArgumentException();
+    }
 }
