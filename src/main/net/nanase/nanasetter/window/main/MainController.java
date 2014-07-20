@@ -3,6 +3,7 @@ package net.nanase.nanasetter.window.main;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.text.FontSmoothingType;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import net.nanase.nanasetter.window.dialog.Dialog;
@@ -28,5 +29,8 @@ public class MainController implements Initializable {
         WebEngine webEngine = htmlRoot.getEngine();
         webEngine.setOnAlert(event -> this.dialog.info(event.getData()));
         webEngine.load(getClass().getResource("/page/index.html").toString());
+
+        htmlRoot.setFontSmoothingType(FontSmoothingType.GRAY);
+        htmlRoot.setContextMenuEnabled(false);
     }
 }
