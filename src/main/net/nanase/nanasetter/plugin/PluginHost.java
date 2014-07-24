@@ -24,6 +24,7 @@
 
 package net.nanase.nanasetter.plugin;
 
+import net.nanase.nanasetter.twitter.TwitterList;
 import net.nanase.nanasetter.window.dialog.Dialog;
 
 import java.util.logging.Logger;
@@ -39,9 +40,12 @@ public class PluginHost {
 
     private final Logger logger;
 
-    public PluginHost(Plugin plugin) {
+    private final TwitterList twitterList;
+
+    public PluginHost(Plugin plugin, TwitterList twitterList) {
         this.plugin = plugin;
         this.logger = Logger.getLogger("nanasetter." + plugin.getName());
+        this.twitterList = twitterList;
     }
 
     public ReadRESTPorter getReadREST() {
@@ -90,5 +94,9 @@ public class PluginHost {
 
     public Logger getLogger() {
         return this.logger;
+    }
+
+    public TwitterList getTwitterList() {
+        return this.twitterList;
     }
 }
