@@ -33,7 +33,7 @@ import net.nanase.nanasetter.twitter.TwitterList;
 
 public class AccessDirectMessagePorter extends Porter {
 
-    public AccessDirectMessagePorter(TwitterList twitterList, PluginHost pluginHost)
+    AccessDirectMessagePorter(TwitterList twitterList, PluginHost pluginHost)
             throws UnsatisfiedPermissionException {
         super(twitterList, pluginHost);
     }
