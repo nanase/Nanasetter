@@ -41,7 +41,7 @@ import netscape.javascript.JSObject;
  * @since Nanasetter 0.1
  */
 public class Dialog {
-    private Window window;
+    private final Window window;
 
     /**
      * 親ウィンドウを指定して新しい Dialog クラスのインスタンスを初期化します。
