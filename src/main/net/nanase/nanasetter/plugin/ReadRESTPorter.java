@@ -33,7 +33,8 @@ import net.nanase.nanasetter.twitter.TwitterList;
 
 public class ReadRESTPorter extends Porter {
 
-    private ReadRESTPorter(TwitterList twitterList, PluginHost pluginHost) {
+    public ReadRESTPorter(TwitterList twitterList, PluginHost pluginHost)
+            throws UnsatisfiedPermissionException {
         super(twitterList, pluginHost);
     }
 

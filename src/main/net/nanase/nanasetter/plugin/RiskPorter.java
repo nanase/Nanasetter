@@ -33,7 +33,8 @@ import net.nanase.nanasetter.twitter.TwitterList;
 
 public class RiskPorter extends Porter {
 
-    private RiskPorter(TwitterList twitterList, PluginHost pluginHost) {
+    public RiskPorter(TwitterList twitterList, PluginHost pluginHost)
+            throws UnsatisfiedPermissionException {
         super(twitterList, pluginHost);
     }
 

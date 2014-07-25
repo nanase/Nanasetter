@@ -33,7 +33,8 @@ import net.nanase.nanasetter.twitter.TwitterList;
 
 public class ExtendPorter extends Porter {
 
-    private ExtendPorter(TwitterList twitterList, PluginHost pluginHost) {
+    public ExtendPorter(TwitterList twitterList, PluginHost pluginHost)
+            throws UnsatisfiedPermissionException {
         super(twitterList, pluginHost);
     }
 

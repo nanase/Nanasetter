@@ -24,8 +24,6 @@
 
 package net.nanase.nanasetter.plugin;
 
-import net.nanase.nanasetter.plugin.PluginPermission;
-import net.nanase.nanasetter.plugin.Porter;
 import net.nanase.nanasetter.twitter.TwitterList;
 
 /**
@@ -35,7 +33,8 @@ import net.nanase.nanasetter.twitter.TwitterList;
 
 public class ConfigurePorter extends Porter {
 
-    private ConfigurePorter(TwitterList twitterList, PluginHost pluginHost) {
+    public ConfigurePorter(TwitterList twitterList, PluginHost pluginHost)
+            throws UnsatisfiedPermissionException {
         super(twitterList, pluginHost);
     }
 
