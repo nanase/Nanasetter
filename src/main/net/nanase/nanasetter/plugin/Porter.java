@@ -43,7 +43,7 @@ public abstract class Porter {
 
     protected final TwitterList twitterList;
 
-    public Porter(TwitterList twitterList, PluginHost pluginHost) throws UnsatisfiedPermissionException {
+    protected Porter(TwitterList twitterList, PluginHost pluginHost) throws UnsatisfiedPermissionException {
         if (twitterList == null)
             throw new IllegalArgumentException();
 
