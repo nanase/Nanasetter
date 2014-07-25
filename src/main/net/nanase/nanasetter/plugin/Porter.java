@@ -43,7 +43,16 @@ public abstract class Porter {
 
     protected final TwitterList twitterList;
 
-    protected Porter(TwitterList twitterList, PluginHost pluginHost) {
+    public Porter(TwitterList twitterList, PluginHost pluginHost) throws UnsatisfiedPermissionException {
+        if (twitterList == null)
+            throw new IllegalArgumentException();
+
+        if (pluginHost == null)
+            throw new IllegalArgumentException();
+
+        if(!pluginHost.getPlugin().getPermission().contains(this.getPermission()))
+            throw new UnsatisfiedPermissionException(this.getPermission());
+
         this.twitterList = twitterList;
         this.pluginHost = pluginHost;
     }
