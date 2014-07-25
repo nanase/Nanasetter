@@ -35,17 +35,16 @@ import java.util.logging.Logger;
  */
 
 public class PluginHost {
-
     private final Plugin plugin;
-
     private final Logger logger;
-
     private final TwitterList twitterList;
+    private final Dialog dialog;
 
-    public PluginHost(Plugin plugin, TwitterList twitterList) {
+    public PluginHost(Plugin plugin, TwitterList twitterList, Dialog dialog) {
         this.plugin = plugin;
         this.logger = Logger.getLogger("nanasetter." + plugin.getName());
         this.twitterList = twitterList;
+        this.dialog = dialog;
     }
 
     public ReadRESTPorter getReadREST() throws UnsatisfiedPermissionException {
@@ -77,8 +76,7 @@ public class PluginHost {
     }
 
     public Dialog getDialog() {
-        // stub
-        return null;
+        return this.dialog;
     }
 
     public Plugin getPlugin() {
