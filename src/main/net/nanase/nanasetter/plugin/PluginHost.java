@@ -48,39 +48,32 @@ public class PluginHost {
         this.twitterList = twitterList;
     }
 
-    public ReadRESTPorter getReadREST() {
-        // stub
-        return null;
+    public ReadRESTPorter getReadREST() throws UnsatisfiedPermissionException {
+        return new ReadRESTPorter(this.twitterList, this);
     }
 
-    public WritePorter getWrite() {
-        // stub
-        return null;
+    public WritePorter getWrite()throws UnsatisfiedPermissionException {
+        return new WritePorter(this.twitterList, this);
     }
 
-    public ReadStreamingPorter getReadStreaming() {
-        // stub
-        return null;
+    public ReadStreamingPorter getReadStreaming() throws UnsatisfiedPermissionException {
+        return new ReadStreamingPorter(this.twitterList, this);
     }
 
-    public ExtendPorter getExtend() {
-        // stub
-        return null;
+    public ExtendPorter getExtend() throws UnsatisfiedPermissionException {
+        return new ExtendPorter(this.twitterList, this);
     }
 
-    public ConfigurePorter getConfigure() {
-        // stub
-        return null;
+    public ConfigurePorter getConfigure() throws UnsatisfiedPermissionException {
+        return new ConfigurePorter(this.twitterList, this);
     }
 
-    public AccessDirectMessagePorter getAccessDirectMessage() {
-        // stub
-        return null;
+    public AccessDirectMessagePorter getAccessDirectMessage()throws UnsatisfiedPermissionException {
+        return new AccessDirectMessagePorter(this.twitterList, this);
     }
 
-    public RiskPorter getRisk() {
-        // stub
-        return null;
+    public RiskPorter getRisk() throws UnsatisfiedPermissionException {
+        return new RiskPorter(this.twitterList, this);
     }
 
     public Dialog getDialog() {
