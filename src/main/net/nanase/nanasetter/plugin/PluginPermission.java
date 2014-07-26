@@ -28,6 +28,7 @@ import net.nanase.nanasetter.utils.JSObjectUtils;
 import netscape.javascript.JSObject;
 
 import java.util.EnumSet;
+import java.util.List;
 import java.util.stream.Collectors;
 
 /**
@@ -115,8 +116,10 @@ public enum PluginPermission {
         if (jsObject == null)
             throw new IllegalArgumentException();
 
-        return EnumSet.copyOf(JSObjectUtils.getArray(jsObject, "permission", String.class)
-                .map(PluginPermission::searchMember).collect(Collectors.toList()));
+        List<PluginPermission> permission = JSObjectUtils.getArray(jsObject, "permission", String.class)
+                .map(PluginPermission::searchMember).collect(Collectors.toList());
+
+        return permission.isEmpty() ? EnumSet.noneOf(PluginPermission.class) : EnumSet.copyOf(permission);
     }
 
     /**
