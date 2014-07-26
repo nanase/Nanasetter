@@ -74,10 +74,10 @@ public class PluginPermissionTest {
                 "([{ permission: ['READ_REST'] }," +
                         "{ permission: ['WRITE'] }," +
                         "{ permission: ['READ_STREAMING'] }," +
-                        "{ permission: ['extend'] }," +
-                        "{ permission: ['config'] }," +
-                        "{ permission: ['directMessage'] }," +
-                        "{ permission: ['risk'] }])");
+                        "{ permission: ['EXTEND'] }," +
+                        "{ permission: ['CONFIGURE'] }," +
+                        "{ permission: ['ACCESS_DIRECT_MESSAGE'] }," +
+                        "{ permission: ['RISK'] }])");
 
         assertEquals(EnumSet.of(READ_REST), parse((JSObject) jsObject_short.getSlot(0)));
         assertEquals(EnumSet.of(WRITE), parse((JSObject) jsObject_short.getSlot(1)));
