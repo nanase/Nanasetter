@@ -98,7 +98,8 @@ public class Plugin {
             throw new IllegalArgumentException(String.format("'%s' は無効なプラグイン名です。", name));
 
         try {
-            siteAddress = new URL(JSObjectUtils.getMember(jsObject, "siteAddress", String.class).get());
+            String siteAddressString = JSObjectUtils.getMember(jsObject, "siteAddress", String.class).orElse(null);
+            siteAddress = (siteAddressString == null) ? null : new URL(siteAddressString);
         } catch (MalformedURLException ex) {
             throw new IllegalArgumentException("サイトアドレスの生成に失敗しました.", ex);
         }
