@@ -95,4 +95,41 @@ public class PluginPermissionTest {
         assertEquals(EnumSet.of(ACCESS_DIRECT_MESSAGE), parse((JSObject) jsObject_long.getSlot(5)));
         assertEquals(EnumSet.of(RISK), parse((JSObject) jsObject_long.getSlot(6)));
     }
+
+    @Test
+    public void testParseMulti() throws Exception {
+        JSObject jsObject_short = (JSObject) webEngine.executeScript(
+                "([{ permission: ['rest', 'write'] }," +
+                        "{ permission: ['write', 'stream'] }," +
+                        "{ permission: ['stream', 'extend'] }," +
+                        "{ permission: ['extend', 'config'] }," +
+                        "{ permission: ['config', 'directMessage'] }," +
+                        "{ permission: ['directMessage', 'risk'] }," +
+                        "{ permission: ['risk', 'rest'] }])");
+
+        JSObject jsObject_long = (JSObject) webEngine.executeScript(
+                "([{ permission: ['READ_REST', 'WRITE'] }," +
+                        "{ permission: ['WRITE', 'READ_STREAMING'] }," +
+                        "{ permission: ['READ_STREAMING', 'EXTEND'] }," +
+                        "{ permission: ['EXTEND', 'CONFIGURE'] }," +
+                        "{ permission: ['CONFIGURE', 'ACCESS_DIRECT_MESSAGE'] }," +
+                        "{ permission: ['ACCESS_DIRECT_MESSAGE', 'RISK'] }," +
+                        "{ permission: ['RISK', 'READ_REST'] }])");
+
+        assertEquals(EnumSet.of(READ_REST, WRITE), parse((JSObject) jsObject_short.getSlot(0)));
+        assertEquals(EnumSet.of(WRITE, READ_STREAMING), parse((JSObject) jsObject_short.getSlot(1)));
+        assertEquals(EnumSet.of(READ_STREAMING, EXTEND), parse((JSObject) jsObject_short.getSlot(2)));
+        assertEquals(EnumSet.of(EXTEND, CONFIGURE), parse((JSObject) jsObject_short.getSlot(3)));
+        assertEquals(EnumSet.of(CONFIGURE, ACCESS_DIRECT_MESSAGE), parse((JSObject) jsObject_short.getSlot(4)));
+        assertEquals(EnumSet.of(ACCESS_DIRECT_MESSAGE, RISK), parse((JSObject) jsObject_short.getSlot(5)));
+        assertEquals(EnumSet.of(RISK, READ_REST), parse((JSObject) jsObject_short.getSlot(6)));
+
+        assertEquals(EnumSet.of(READ_REST, WRITE), parse((JSObject) jsObject_long.getSlot(0)));
+        assertEquals(EnumSet.of(WRITE, READ_STREAMING), parse((JSObject) jsObject_long.getSlot(1)));
+        assertEquals(EnumSet.of(READ_STREAMING, EXTEND), parse((JSObject) jsObject_long.getSlot(2)));
+        assertEquals(EnumSet.of(EXTEND, CONFIGURE), parse((JSObject) jsObject_long.getSlot(3)));
+        assertEquals(EnumSet.of(CONFIGURE, ACCESS_DIRECT_MESSAGE), parse((JSObject) jsObject_long.getSlot(4)));
+        assertEquals(EnumSet.of(ACCESS_DIRECT_MESSAGE, RISK), parse((JSObject) jsObject_long.getSlot(5)));
+        assertEquals(EnumSet.of(RISK, READ_REST), parse((JSObject) jsObject_long.getSlot(6)));
+    }
 }
