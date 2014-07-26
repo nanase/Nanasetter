@@ -41,6 +41,15 @@ public class PluginHost {
     private final Dialog dialog;
 
     public PluginHost(Plugin plugin, TwitterList twitterList, Dialog dialog) {
+        if (plugin == null)
+            throw new IllegalArgumentException();
+
+        if (twitterList == null)
+            throw new IllegalArgumentException();
+
+        if (dialog == null)
+            throw new IllegalArgumentException();
+
         this.plugin = plugin;
         this.logger = Logger.getLogger("nanasetter." + plugin.getName());
         this.twitterList = twitterList;
@@ -51,7 +60,7 @@ public class PluginHost {
         return new ReadRESTPorter(this.twitterList, this);
     }
 
-    public WritePorter getWrite()throws UnsatisfiedPermissionException {
+    public WritePorter getWrite() throws UnsatisfiedPermissionException {
         return new WritePorter(this.twitterList, this);
     }
 
@@ -67,7 +76,7 @@ public class PluginHost {
         return new ConfigurePorter(this.twitterList, this);
     }
 
-    public AccessDirectMessagePorter getAccessDirectMessage()throws UnsatisfiedPermissionException {
+    public AccessDirectMessagePorter getAccessDirectMessage() throws UnsatisfiedPermissionException {
         return new AccessDirectMessagePorter(this.twitterList, this);
     }
 
