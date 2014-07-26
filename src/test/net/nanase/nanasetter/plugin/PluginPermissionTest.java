@@ -61,6 +61,8 @@ public class PluginPermissionTest {
 
     @Test
     public void testParseSingle() throws Exception {
+        JSObject jsObject_none = (JSObject) webEngine.executeScript("({ permission: [] })");
+
         JSObject jsObject_short = (JSObject) webEngine.executeScript(
                 "([{ permission: ['rest'] }," +
                         "{ permission: ['write'] }," +
@@ -78,6 +80,8 @@ public class PluginPermissionTest {
                         "{ permission: ['CONFIGURE'] }," +
                         "{ permission: ['ACCESS_DIRECT_MESSAGE'] }," +
                         "{ permission: ['RISK'] }])");
+
+        assertEquals(EnumSet.noneOf(PluginPermission.class), parse(jsObject_none));
 
         assertEquals(EnumSet.of(READ_REST), parse((JSObject) jsObject_short.getSlot(0)));
         assertEquals(EnumSet.of(WRITE), parse((JSObject) jsObject_short.getSlot(1)));
