@@ -60,7 +60,7 @@ public class PluginPermissionTest {
     }
 
     @Test
-    public void testParse() throws Exception {
+    public void testParseSingle() throws Exception {
         JSObject jsObject_short = (JSObject) webEngine.executeScript(
                 "([{ permission: ['rest'] }," +
                         "{ permission: ['write'] }," +
