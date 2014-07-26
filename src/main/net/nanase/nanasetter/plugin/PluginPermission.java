@@ -112,6 +112,9 @@ public enum PluginPermission {
      * @return 生成された {@code EnumSet<PluginPermission>}。
      */
     public static EnumSet<PluginPermission> parse(JSObject jsObject) {
+        if (jsObject == null)
+            throw new IllegalArgumentException();
+
         return EnumSet.copyOf(JSObjectUtils.getArray(jsObject, "permission", String.class)
                 .map(PluginPermission::searchMember).collect(Collectors.toList()));
     }
