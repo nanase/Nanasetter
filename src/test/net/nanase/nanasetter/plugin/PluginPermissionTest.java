@@ -35,6 +35,7 @@ import java.util.EnumSet;
 
 import static net.nanase.nanasetter.plugin.PluginPermission.*;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class PluginPermissionTest {
 
@@ -135,5 +136,38 @@ public class PluginPermissionTest {
         assertEquals(EnumSet.of(CONFIGURE, ACCESS_DIRECT_MESSAGE), parse((JSObject) jsObject_long.getSlot(4)));
         assertEquals(EnumSet.of(ACCESS_DIRECT_MESSAGE, RISK), parse((JSObject) jsObject_long.getSlot(5)));
         assertEquals(EnumSet.of(RISK, READ_REST), parse((JSObject) jsObject_long.getSlot(6)));
+    }
+
+    @Test
+    public void testParseFailure() throws Exception {
+        JSObject jsObject_wrongName = (JSObject) webEngine.executeScript(
+                "([{ permission: ['read'] }, { permission: ['read', 'rest'] }])");
+
+        try {
+            parse(null);
+            fail();
+        } catch (IllegalArgumentException e) {
+            //
+        } catch (Exception e) {
+            fail();
+        }
+
+        try {
+            parse((JSObject) jsObject_wrongName.getSlot(0));
+            fail();
+        } catch (IllegalArgumentException e) {
+            //
+        } catch (Exception e) {
+            fail();
+        }
+
+        try {
+            parse((JSObject) jsObject_wrongName.getSlot(1));
+            fail();
+        } catch (IllegalArgumentException e) {
+            //
+        } catch (Exception e) {
+            fail();
+        }
     }
 }
