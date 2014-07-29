@@ -40,6 +40,8 @@ public class UnsatisfiedPermissionException extends Exception {
      * Constructs a new exception with {@code null} as its detail message.
      * The cause is not initialized, and may subsequently be initialized by a
      * call to {@link #initCause}.
+     *
+     * @param requestedPermission 要求されたパーミッション。
      */
     public UnsatisfiedPermissionException(PluginPermission requestedPermission) {
         super(String.format("プラグインで指定されていないパーミッション '%s' が要求されました。", requestedPermission.name()));
