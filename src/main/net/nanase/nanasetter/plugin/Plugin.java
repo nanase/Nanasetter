@@ -149,7 +149,7 @@ public class Plugin {
     /**
      * プラグインが要求するパーミッションを取得します。
      *
-     * @return パーミッションを表す @code{EnumSet<PluginPermission>} オブジェクト。
+     * @return パーミッションを表す {@code EnumSet<PluginPermission>} オブジェクト。
      */
     public EnumSet<PluginPermission> getPermission() {
         return this.permission;
