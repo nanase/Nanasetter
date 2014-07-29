@@ -18,6 +18,6 @@ Java で書かれた Twitter クライアントです。Java の勉強用に制�
 
 ## ライセンス
 
-[_MIT ライセンス_](../blob/master/LICENSE)
+[_MIT ライセンス_](../master/LICENSE)
 
 Copyright (C) 2014 Tomona Nanase
