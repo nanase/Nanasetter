@@ -61,6 +61,27 @@ public class PluginPermissionTest {
     }
 
     @Test
+    public void testParseSet() throws Exception {
+        JSObject jsObject = (JSObject) webEngine.executeScript(
+                "([{ permission: 'full' }," +
+                        "{ permission: 'none' }," +
+                        "{ permission: 'foo' }])");
+
+        assertEquals(FULL, parse((JSObject) jsObject.getSlot(0)));
+        assertEquals(NONE, parse((JSObject) jsObject.getSlot(1)));
+
+        // illegal
+        try {
+            parse((JSObject) jsObject.getSlot(2));
+            fail();
+        } catch (IllegalArgumentException e) {
+            //
+        } catch (Exception e) {
+            fail();
+        }
+    }
+
+    @Test
     public void testParseSingle() throws Exception {
         JSObject jsObject_none = (JSObject) webEngine.executeScript("({ permission: [] })");
 
