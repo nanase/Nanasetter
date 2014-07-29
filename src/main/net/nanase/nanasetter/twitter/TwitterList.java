@@ -111,7 +111,7 @@ public class TwitterList extends ArrayList<Twitter> {
      * リスト中から該当する Id を持つ Twitter オブジェクトを取得します。
      *
      * @param id Twitter の Id。
-     * @return Twitter オブジェクトを内包する @code{Optional<Twitter>} オブジェクト。
+     * @return Twitter オブジェクトを内包する {@code Optional<Twitter>} オブジェクト。
      */
     public Optional<Twitter> getTwitter(long id) {
         for (Twitter t : this) {
