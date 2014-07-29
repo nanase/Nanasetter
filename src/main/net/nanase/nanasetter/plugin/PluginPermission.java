@@ -116,10 +116,23 @@ public enum PluginPermission {
         if (jsObject == null)
             throw new IllegalArgumentException();
 
-        List<PluginPermission> permission = JSObjectUtils.getArray(jsObject, "permission", String.class)
-                .map(PluginPermission::searchMember).collect(Collectors.toList());
+        String set = JSObjectUtils.getMember(jsObject, "permission", String.class).orElse(null);
 
-        return permission.isEmpty() ? EnumSet.noneOf(PluginPermission.class) : EnumSet.copyOf(permission);
+        if (set != null) {
+            switch (set.toLowerCase()) {
+                case "full":
+                    return FULL;
+                case "none":
+                    return NONE;
+                default:
+                    throw new IllegalArgumentException();
+            }
+        } else {
+            List<PluginPermission> permission = JSObjectUtils.getArray(jsObject, "permission", String.class)
+                    .map(PluginPermission::searchMember).collect(Collectors.toList());
+
+            return permission.isEmpty() ? EnumSet.noneOf(PluginPermission.class) : EnumSet.copyOf(permission);
+        }
     }
 
     /**
