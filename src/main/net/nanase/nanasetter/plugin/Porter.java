@@ -55,6 +55,8 @@ public abstract class Porter {
 
         this.twitterList = twitterList;
         this.pluginHost = pluginHost;
+
+        this.pluginHost.getLogger().info(String.format("Created: %s porter.", this.getPermission().name()));
     }
 
     protected abstract PluginPermission getPermission();
