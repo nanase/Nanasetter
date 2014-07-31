@@ -39,10 +39,23 @@ import net.nanase.nanasetter.twitter.TwitterList;
  */
 public abstract class Porter {
 
+    /**
+     * プラグインのホストを表す PluginHost オブジェクト。
+     */
     protected final PluginHost pluginHost;
 
+    /**
+     * Twitter アカウントのリストを表す TwitterList オブジェクト。
+     */
     protected final TwitterList twitterList;
 
+    /**
+     * パラメータを使用して新しい Porter クラスのインスタンスを初期化します。
+     *
+     * @param twitterList Twitter アカウントのリストを表す TwitterList オブジェクト。
+     * @param pluginHost  プラグインのホストを表す PluginHost オブジェクト。
+     * @throws UnsatisfiedPermissionException プラグインで指定されていないパーミッションを要求した時に発生します。
+     */
     protected Porter(TwitterList twitterList, PluginHost pluginHost) throws UnsatisfiedPermissionException {
         if (twitterList == null)
             throw new IllegalArgumentException();
@@ -50,7 +63,7 @@ public abstract class Porter {
         if (pluginHost == null)
             throw new IllegalArgumentException();
 
-        if(!pluginHost.getPlugin().getPermission().contains(this.getPermission()))
+        if (!pluginHost.getPlugin().getPermission().contains(this.getPermission()))
             throw new UnsatisfiedPermissionException(this.getPermission());
 
         this.twitterList = twitterList;
@@ -59,5 +72,10 @@ public abstract class Porter {
         this.pluginHost.getLogger().info(String.format("Created: %s porter.", this.getPermission().name()));
     }
 
+    /**
+     * このオブジェクトが提供する API を利用するときの必要なパーミッションを取得します。
+     *
+     * @return プラグインパーミッション。
+     */
     protected abstract PluginPermission getPermission();
 }
