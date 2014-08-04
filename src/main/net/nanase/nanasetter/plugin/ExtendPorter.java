@@ -31,13 +31,28 @@ import net.nanase.nanasetter.twitter.TwitterList;
  * Created by nanase on 14/07/18.
  */
 
+/**
+ * レートリミットの取得、ユーザ提案の取得などの機能を提供するクラスです。
+ *
+ * @author Tomona Nanase
+ * @since Nanasetter 0.1
+ */
 public class ExtendPorter extends Porter {
-
+    /**
+     * Twitter リストとプラグインホストを指定して新しい ExtendPorter クラスのインスタンスを初期化します。
+     *
+     * @param twitterList Twitter リストを表す TwitterList オブジェクト。
+     * @param pluginHost  プラグインホストを表す PluginHost オブジェクト。
+     * @throws UnsatisfiedPermissionException プラグインで指定されていないパーミッションが要求されました。
+     */
     ExtendPorter(TwitterList twitterList, PluginHost pluginHost)
             throws UnsatisfiedPermissionException {
         super(twitterList, pluginHost);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected PluginPermission getPermission() {
         return PluginPermission.EXTEND;
