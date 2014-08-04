@@ -1,8 +1,7 @@
 ななせったー (Nanasetter)
 =========================
 
-[![Build Status](https://travis-ci.org/nanase/Nanasetter.svg?branch=master)](https://travis-ci.org/nanase/Nanasetter)  
-[![Gitter chat](https://badges.gitter.im/nanase/Nanasetter.png)](https://gitter.im/nanase/Nanasetter)
+[![Build Status](https://travis-ci.org/nanase/Nanasetter.svg?branch=master)](https://travis-ci.org/nanase/Nanasetter) [![Gitter chat](https://badges.gitter.im/nanase/Nanasetter.png)](https://gitter.im/nanase/Nanasetter)
 
 Java で書かれた Twitter クライアントです。Java の勉強用に制作しています。
 
