@@ -31,13 +31,28 @@ import net.nanase.nanasetter.twitter.TwitterList;
  * Created by nanase on 14/05/27.
  */
 
+/**
+ * ブロック、フォローとフォロー解除などの機能を提供するクラスです。
+ *
+ * @author Tomona Nanase
+ * @since Nanasetter 0.1
+ */
 public class RiskPorter extends Porter {
-
+    /**
+     * Twitter リストとプラグインホストを指定して新しい RiskPorter クラスのインスタンスを初期化します。
+     *
+     * @param twitterList Twitter リストを表す TwitterList オブジェクト。
+     * @param pluginHost  プラグインホストを表す PluginHost オブジェクト。
+     * @throws UnsatisfiedPermissionException プラグインで指定されていないパーミッションが要求されました。
+     */
     RiskPorter(TwitterList twitterList, PluginHost pluginHost)
             throws UnsatisfiedPermissionException {
         super(twitterList, pluginHost);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     protected PluginPermission getPermission() {
         return PluginPermission.RISK;
