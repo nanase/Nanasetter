@@ -24,8 +24,12 @@
 
 package net.nanase.nanasetter.plugin;
 
+import javafx.scene.web.WebEngine;
 import net.nanase.nanasetter.twitter.TwitterList;
+import net.nanase.nanasetter.utils.JSObjectUtils;
 import net.nanase.nanasetter.window.dialog.Dialog;
+import netscape.javascript.JSException;
+import netscape.javascript.JSObject;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -59,7 +63,70 @@ public class PluginLoader {
         return this.pluginHosts;
     }
 
-    public void loadPlugin(String directory, Dialog dialog, TwitterList twitterList) {
-        // stub
+    public void loadPlugin(String directory, WebEngine webEngine, Dialog dialog, TwitterList twitterList) {
+        Path path = Paths.get(directory);
+
+        this.logger.info(String.format("ディレクトリ '%s' に対してプラグインを読み込みます.", directory));
+
+        try (Stream<Path> stream = Files.list(path)) {
+            stream.filter(Files::isDirectory)
+                    .map(p -> p.resolve("plugin.js"))
+                    .filter(Files::exists)
+                    .forEach(f -> {
+                        JSObject jsPlugin = loadPlugin(f, webEngine);
+
+                        if (jsPlugin == null)
+                            return;
+
+                        if (!JSObjectUtils.hasMember(jsPlugin, "initialize")) {
+                            this.logger.warning(String.format("ファイル '%s' が読み込まれましたが、必要なメソッドが定義されていません.", f.toString()));
+                            return;
+                        }
+
+                        try {
+                            JSObject info = JSObjectUtils.getMember(jsPlugin, "info", JSObject.class).orElse(null);
+                            Plugin plugin = Plugin.create(info);
+                            PluginHost host = new PluginHost(plugin, twitterList, dialog);
+
+                            this.pluginHosts.add(host);
+                            this.logger.info(String.format("プラグイン '%s' が読み込まれました(バージョン: %s).", plugin.getName(), plugin.getVersion()));
+
+                            jsPlugin.call("initialize", new Object[]{host});
+                        } catch (Exception ex) {
+                            this.logger.warning(String.format("ファイル '%s' を初期化中にエラーが発生しました.", f.toString()));
+                            this.logger.warning(ex.getMessage());
+                        }
+                    });
+        } catch (IOException ex) {
+            this.logger.warning(ex.getMessage());
+        }
+
+        this.logger.info("プラグインのロードが完了しました.");
+    }
+
+    private JSObject loadPlugin(Path pluginFile, WebEngine webEngine) {
+        try {
+            StringBuilder sb = new StringBuilder();
+
+            sb.append("eval('");
+            Files.readAllLines(pluginFile).forEach(s ->
+                    sb.append(s.replace("'", "\\'").replace("\"", "\\\"")).append("\\n"));
+            sb.append("')");
+
+            String script = sb.toString();
+            return (JSObject) webEngine.executeScript(script);
+        } catch (IOException ex) {
+            this.logger.warning(String.format("ファイル '%s' は読み込めません.", pluginFile.toString()));
+            this.logger.warning(ex.getMessage());
+            return null;
+        } catch (JSException ex) {
+            this.logger.warning(String.format("ファイル '%s' を初期化中にエラーが発生しました.", pluginFile.toString()));
+            this.logger.warning(ex.getMessage());
+            return null;
+        } catch (Exception ex) {
+            this.logger.warning(String.format("ファイル '%s' を読み込み中に不明なエラーが発生しました.", pluginFile.toString()));
+            this.logger.warning(ex.getMessage());
+            return null;
+        }
     }
 }
