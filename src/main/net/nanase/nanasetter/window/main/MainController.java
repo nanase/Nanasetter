@@ -8,9 +8,12 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import net.nanase.nanasetter.plugin.PluginLoader;
 import net.nanase.nanasetter.twitter.TwitterList;
+import net.nanase.nanasetter.utils.LogFormatter;
 import net.nanase.nanasetter.window.dialog.Dialog;
+
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.ConsoleHandler;
 import java.util.logging.Logger;
 
 public class MainController implements Initializable {
@@ -29,6 +32,10 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.twitterList = new TwitterList();
         this.logger = Logger.getLogger("nanasetter");
+        ConsoleHandler consoleHandler = new ConsoleHandler();
+        consoleHandler.setFormatter(LogFormatter.getInstance());
+        this.logger.addHandler(consoleHandler);
+        logger.setUseParentHandlers(false);
     }
 
     public void setup() {
