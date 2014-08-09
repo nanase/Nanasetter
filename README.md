@@ -8,7 +8,8 @@ Java で書かれた Twitter クライアントです。Java の勉強用に制�
 
 ## 各種リンク
 
-構想ノート: https://gist.github.com/nanase/10992026
++ __構想ノート__: https://gist.github.com/nanase/10992026 <br/>
+  ななせったーの制作前に寄せられたクライアントの要望や構想です。
 
 
 ## Contributors
