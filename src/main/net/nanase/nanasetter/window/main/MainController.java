@@ -1,5 +1,6 @@
 package net.nanase.nanasetter.window.main;
 
+import javafx.concurrent.Worker.State;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
@@ -48,5 +49,15 @@ public class MainController implements Initializable {
 
         htmlRoot.setFontSmoothingType(FontSmoothingType.GRAY);
         htmlRoot.setContextMenuEnabled(false);
+
+        webEngine.getLoadWorker().stateProperty().addListener(
+                (ov, oldState, newState) -> {
+                    if (newState == State.SUCCEEDED) this.onLoaded();
+                });
+    }
+
+    private void onLoaded() {
+        WebEngine webEngine = htmlRoot.getEngine();
+        this.pluginLoader.loadPlugin("./plugin/", webEngine, this.dialog, this.twitterList);
     }
 }
