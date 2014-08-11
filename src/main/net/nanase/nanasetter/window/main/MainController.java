@@ -33,22 +33,23 @@ public class MainController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.twitterList = new TwitterList();
         this.logger = Logger.getLogger("nanasetter");
+
         ConsoleHandler consoleHandler = new ConsoleHandler();
         consoleHandler.setFormatter(LogFormatter.getInstance());
         this.logger.addHandler(consoleHandler);
-        logger.setUseParentHandlers(false);
+        this.logger.setUseParentHandlers(false);
     }
 
     public void setup() {
         this.dialog = new Dialog(this.root.getScene().getWindow());
         this.pluginLoader = new PluginLoader(this.dialog, this.logger);
 
-        WebEngine webEngine = htmlRoot.getEngine();
+        WebEngine webEngine = this.htmlRoot.getEngine();
         webEngine.setOnAlert(event -> this.dialog.info(event.getData()));
         webEngine.load(getClass().getResource("/page/index.html").toString());
 
-        htmlRoot.setFontSmoothingType(FontSmoothingType.GRAY);
-        htmlRoot.setContextMenuEnabled(false);
+        this.htmlRoot.setFontSmoothingType(FontSmoothingType.GRAY);
+        this.htmlRoot.setContextMenuEnabled(false);
 
         webEngine.getLoadWorker().stateProperty().addListener(
                 (ov, oldState, newState) -> {
@@ -57,7 +58,7 @@ public class MainController implements Initializable {
     }
 
     private void onLoaded() {
-        WebEngine webEngine = htmlRoot.getEngine();
+        WebEngine webEngine = this.htmlRoot.getEngine();
         this.pluginLoader.loadPlugin("./plugin/", webEngine, this.dialog, this.twitterList);
     }
 }
