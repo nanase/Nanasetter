@@ -39,30 +39,30 @@ public class LoggerWrapper {
     }
 
     public void config(Object msg) {
-        // stub
+        this.logger.config(msg.toString());
     }
 
     public void fine(Object msg) {
-        // stub
+        this.logger.fine(msg.toString());
     }
 
     public void finer(Object msg) {
-        // stub
+        this.logger.finer(msg.toString());
     }
 
     public void finest(Object msg) {
-        // stub
+        this.logger.finest(msg.toString());
     }
 
     public void info(Object msg) {
-        // stub
+        this.logger.info(msg.toString());
     }
 
     public void severe(Object msg) {
-        // stub
+        this.logger.severe(msg.toString());
     }
 
     public void warning(Object msg) {
-        // stub
+        this.logger.warning(msg.toString());
     }
 }
