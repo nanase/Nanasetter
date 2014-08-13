@@ -38,31 +38,31 @@ public class LoggerWrapper {
         this.logger = logger;
     }
 
-    public void config(String msg) {
+    public void config(Object msg) {
         // stub
     }
 
-    public void fine(String msg) {
+    public void fine(Object msg) {
         // stub
     }
 
-    public void finer(String msg) {
+    public void finer(Object msg) {
         // stub
     }
 
-    public void finest(String msg) {
+    public void finest(Object msg) {
         // stub
     }
 
-    public void info(String msg) {
+    public void info(Object msg) {
         // stub
     }
 
-    public void severe(String msg) {
+    public void severe(Object msg) {
         // stub
     }
 
-    public void warning(String msg) {
+    public void warning(Object msg) {
         // stub
     }
 }
