@@ -25,6 +25,7 @@
 package net.nanase.nanasetter.plugin;
 
 import net.nanase.nanasetter.twitter.TwitterList;
+import net.nanase.nanasetter.utils.LoggerWrapper;
 import net.nanase.nanasetter.window.dialog.Dialog;
 
 import java.util.logging.Logger;
@@ -42,7 +43,7 @@ import java.util.logging.Logger;
  */
 public class PluginHost {
     private final Plugin plugin;
-    private final Logger logger;
+    private final LoggerWrapper logger;
     private final TwitterList twitterList;
     private final Dialog dialog;
 
@@ -64,7 +65,7 @@ public class PluginHost {
             throw new IllegalArgumentException();
 
         this.plugin = plugin;
-        this.logger = Logger.getLogger("nanasetter." + plugin.getName());
+        this.logger = new LoggerWrapper(Logger.getLogger("nanasetter." + plugin.getName()));
         this.twitterList = twitterList;
         this.dialog = dialog;
     }
@@ -162,7 +163,7 @@ public class PluginHost {
      *
      * @return このプラグインホストに割り当てられた Logger オブジェクト。
      */
-    public Logger getLogger() {
+    public LoggerWrapper getLogger() {
         return this.logger;
     }
 
