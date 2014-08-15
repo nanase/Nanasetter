@@ -31,37 +31,80 @@ import java.util.logging.Logger;
  * Created by nanase on 14/08/12.
  */
 
+/**
+ * JavaScript からロガーを扱うために必要なメソッドを提供します。
+ */
 public class LoggerWrapper {
     private final Logger logger;
 
+    /**
+     * 本体となるロガーを指定して新しい LoggerWrapper クラスのインスタンスを初期化します。
+     *
+     * @param logger 本体となる Logger オブジェクト。
+     */
     public LoggerWrapper(Logger logger) {
         this.logger = logger;
     }
 
+    /**
+     * レベル CONFIG としてロギングします。
+     *
+     * @param msg メッセージとなる文字列またはその他のオブジェクト。
+     */
     public void config(Object msg) {
         this.logger.config(msg.toString());
     }
 
+    /**
+     * レベル FINE としてロギングします。
+     *
+     * @param msg メッセージとなる文字列またはその他のオブジェクト。
+     */
     public void fine(Object msg) {
         this.logger.fine(msg.toString());
     }
 
+    /**
+     * レベル FINER としてロギングします。
+     *
+     * @param msg メッセージとなる文字列またはその他のオブジェクト。
+     */
     public void finer(Object msg) {
         this.logger.finer(msg.toString());
     }
 
+    /**
+     * レベル FINEST としてロギングします。
+     *
+     * @param msg メッセージとなる文字列またはその他のオブジェクト。
+     */
     public void finest(Object msg) {
         this.logger.finest(msg.toString());
     }
 
+    /**
+     * レベル INFO としてロギングします。
+     *
+     * @param msg メッセージとなる文字列またはその他のオブジェクト。
+     */
     public void info(Object msg) {
         this.logger.info(msg.toString());
     }
 
+    /**
+     * レベル SEVERE としてロギングします。
+     *
+     * @param msg メッセージとなる文字列またはその他のオブジェクト。
+     */
     public void severe(Object msg) {
         this.logger.severe(msg.toString());
     }
 
+    /**
+     * レベル WARNING としてロギングします。
+     *
+     * @param msg メッセージとなる文字列またはその他のオブジェクト。
+     */
     public void warning(Object msg) {
         this.logger.warning(msg.toString());
     }
