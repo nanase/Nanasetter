@@ -43,6 +43,9 @@ public class LoggerWrapper {
      * @param logger 本体となる Logger オブジェクト。
      */
     public LoggerWrapper(Logger logger) {
+        if (logger == null)
+            throw new IllegalArgumentException();
+
         this.logger = logger;
     }
 
@@ -52,6 +55,9 @@ public class LoggerWrapper {
      * @param msg メッセージとなる文字列またはその他のオブジェクト。
      */
     public void config(Object msg) {
+        if (msg == null)
+            throw new IllegalArgumentException();
+
         this.logger.config(msg.toString());
     }
 
@@ -61,6 +67,9 @@ public class LoggerWrapper {
      * @param msg メッセージとなる文字列またはその他のオブジェクト。
      */
     public void fine(Object msg) {
+        if (msg == null)
+            throw new IllegalArgumentException();
+
         this.logger.fine(msg.toString());
     }
 
@@ -70,6 +79,9 @@ public class LoggerWrapper {
      * @param msg メッセージとなる文字列またはその他のオブジェクト。
      */
     public void finer(Object msg) {
+        if (msg == null)
+            throw new IllegalArgumentException();
+
         this.logger.finer(msg.toString());
     }
 
@@ -79,6 +91,9 @@ public class LoggerWrapper {
      * @param msg メッセージとなる文字列またはその他のオブジェクト。
      */
     public void finest(Object msg) {
+        if (msg == null)
+            throw new IllegalArgumentException();
+
         this.logger.finest(msg.toString());
     }
 
@@ -88,6 +103,9 @@ public class LoggerWrapper {
      * @param msg メッセージとなる文字列またはその他のオブジェクト。
      */
     public void info(Object msg) {
+        if (msg == null)
+            throw new IllegalArgumentException();
+
         this.logger.info(msg.toString());
     }
 
@@ -97,6 +115,9 @@ public class LoggerWrapper {
      * @param msg メッセージとなる文字列またはその他のオブジェクト。
      */
     public void severe(Object msg) {
+        if (msg == null)
+            throw new IllegalArgumentException();
+
         this.logger.severe(msg.toString());
     }
 
@@ -106,6 +127,9 @@ public class LoggerWrapper {
      * @param msg メッセージとなる文字列またはその他のオブジェクト。
      */
     public void warning(Object msg) {
+        if (msg == null)
+            throw new IllegalArgumentException();
+        
         this.logger.warning(msg.toString());
     }
 }
