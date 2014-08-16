@@ -33,6 +33,9 @@ import java.util.logging.Logger;
 
 /**
  * JavaScript からロガーを扱うために必要なメソッドを提供します。
+ *
+ * @author Tomona Nanase
+ * @since Nanasetter 0.1
  */
 public class LoggerWrapper {
     private final Logger logger;
@@ -129,7 +132,7 @@ public class LoggerWrapper {
     public void warning(Object msg) {
         if (msg == null)
             throw new IllegalArgumentException();
-        
+
         this.logger.warning(msg.toString());
     }
 }
