@@ -86,6 +86,13 @@ public class PluginLoader {
                         try {
                             JSObject info = JSObjectUtils.getMember(jsPlugin, "info", JSObject.class).orElse(null);
                             Plugin plugin = Plugin.create(info);
+
+                            if (this.existsPluginByName(plugin.getName())) {
+                                this.logger.warning(String.format("プラグイン '%s'(バージョン: %s) が読み込まれましたが、既に読み込まれています.",
+                                        plugin.getName(), plugin.getVersion()));
+                                return;
+                            }
+
                             PluginHost host = new PluginHost(plugin, twitterList, dialog);
 
                             this.pluginHosts.add(host);
@@ -102,6 +109,10 @@ public class PluginLoader {
         }
 
         this.logger.info("プラグインのロードが完了しました.");
+    }
+
+    private boolean existsPluginByName(String pluginName) {
+        return this.pluginHosts.stream().anyMatch(p -> p.getPlugin().getName().equals(pluginName));
     }
 
     private JSObject loadPlugin(Path pluginFile, WebEngine webEngine) {
